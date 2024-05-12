@@ -22,15 +22,18 @@ public:
 
     ~SerialConnection();
 
-    SerialConnectionState writeString(const QByteArray &data) const;
+    [[nodiscard]] SerialConnectionState WriteString(const QByteArray &data) const;
 
-    SerialConnectionState writeFile(const std::string &filename) const;
+    [[nodiscard]] SerialConnectionState WriteFile(const std::string &filename) const;
 
-    QByteArray readString() const;
+    [[nodiscard]] QByteArray ReadString() const;
 
-    SerialConnectionState readFile(const std::string &newFileName) const;
+    [[nodiscard]] SerialConnectionState ReadFile(const std::string &newFileName) const;
 
 private:
-    QSerialPort *serialPort;
+    QSerialPort *SerialPort;
+    QString CurrentConnectedSerialPortName;
+    QSerialPort::BaudRate CurrentConnectedSerialPortBaudRate;
+
 };
 #endif //SERIAL_CONNECTION_H

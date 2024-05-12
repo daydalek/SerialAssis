@@ -15,9 +15,14 @@ find_package(Qt6 COMPONENTS
         SerialPort
         REQUIRED)
 
-add_executable(SerialAssis main.cpp
-        include/SerialConnection.cpp
-        include/SerialConnection.h)
+add_executable(SerialAssis src/main.cpp
+        src/SerialConnection.cpp
+        include/SerialConnection.h
+        src/mainwindow.ui
+        include/UiWindow.h
+        src/MainWindow.cpp
+        include/MainWindow.h
+)
 target_link_libraries(SerialAssis
         Qt::Core
         Qt::Gui
