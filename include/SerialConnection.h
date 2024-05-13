@@ -6,6 +6,7 @@
 #define SERIAL_CONNECTION_H
 #include <string>
 #include <QSerialPort>
+#include <set>
 
 enum class SerialConnectionState {
     NoError,

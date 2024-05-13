@@ -6,7 +6,7 @@
 #define MAINWINDOW_H
 
 #include <QStandardItemModel>
-
+#include <vector>
 #include "MainWindow.h"
 #include "SerialConnection.h"
 #include "UiWindow.h"
@@ -25,6 +25,14 @@ private:
     Ui::MainWindow *ui;
     SerialConnection *UiSerialConnection{};
     QStandardItemModel *SerialPortModel;
+    QStandardItemModel *BaudRateModel{};
+    std::vector<QSerialPort::BaudRate> BaudRateList={
+        QSerialPort::Baud9600,
+        QSerialPort::Baud19200,
+        QSerialPort::Baud38400,
+        QSerialPort::Baud57600,
+        QSerialPort::Baud115200
+    };
 
 private slots:
     void connectSlots();
@@ -36,6 +44,9 @@ private slots:
     void sendData();
 
     void receiveData();
+
+    void initBaudRate();
+
 };
 
 #endif //MAINWINDOW_H

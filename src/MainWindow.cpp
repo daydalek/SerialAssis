@@ -14,6 +14,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     connectSlots();
     this->SerialPortModel = new QStandardItemModel(this);
+    this->BaudRateModel=new QStandardItemModel(this);
+    initBaudRate();
     getAvaliableSerialPorts();
     auto *RefreshSerialPortList = new QTimer(this);
     connect(RefreshSerialPortList, &QTimer::timeout, this, &MainWindow::getAvaliableSerialPorts);
@@ -33,6 +35,14 @@ void MainWindow::getAvaliableSerialPorts() {
         this->SerialPortModel->appendRow(NewItem);
     }
     ui->SerialList->setModel(this->SerialPortModel);
+}
+
+void MainWindow::initBaudRate() {
+    for (const auto &BaudRate: this->BaudRateList) {
+        auto *NewItem = new QStandardItem(QString::number(BaudRate));
+        this->BaudRateModel->appendRow(NewItem);
+    }
+    ui->BaudRateList->setModel(this->BaudRateModel);
 }
 
 
