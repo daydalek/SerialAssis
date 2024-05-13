@@ -13,7 +13,9 @@ enum class SerialConnectionState {
     FileNotFound,
     FileReadError,
     LastSerialOperationNotCompleted,
-    NothingToBeReaded
+    NothingToBeReaded,
+    NothingToSend,
+    BlankSerialPortName
 };
 
 class SerialConnection {
@@ -29,6 +31,9 @@ public:
     [[nodiscard]] QByteArray ReadString() const;
 
     [[nodiscard]] SerialConnectionState ReadFile(const std::string &newFileName) const;
+
+    [[nodiscard]] SerialConnectionState CloseConnection() const;
+
 
 private:
     QSerialPort *SerialPort;

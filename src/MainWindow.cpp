@@ -7,9 +7,25 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-// connect(ui->EstablishConnectionButton, &QPushButton::clicked, this,SerialConnection::SerialConnection("COM1", QSerialPort::Baud9600));
+    ConnectSlots();
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+}
+
+void MainWindow::CreateConnection() {
+}
+
+void MainWindow::CloseConnection() {
+}
+
+void MainWindow::SendData() {
+}
+
+void MainWindow::ConnectSlots() {
+    connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, &MainWindow::CreateConnection);
+    connect(ui->StopConnectionButton, &QPushButton::clicked, this, &MainWindow::CloseConnection);
+    connect(ui->SendDataButton, &QPushButton::clicked, this, &MainWindow::SendData);
+    connect(ui->ReceiveDataButton, &QPushButton::clicked, this, &MainWindow::ReceiveData);
 }

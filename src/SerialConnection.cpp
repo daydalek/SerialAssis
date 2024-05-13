@@ -88,3 +88,16 @@ SerialConnectionState SerialConnection::ReadFile(const std::string &newFileName)
     file.write(data);
     return SerialConnectionState::NoError;
 }
+
+/**
+ * 
+ * @return SerialPort is closed only when last operation is finished(which is no bytes to read and no bytes to write)
+ */
+SerialConnectionState SerialConnection::CloseConnection() const {
+    assert(SerialPort != nullptr);
+    if (SerialPort->bytesAvailable() == 0 && SerialPort->bytesToWrite() == 0) {
+        SerialPort->close();
+        return SerialConnectionState::NoError;
+    } else return SerialConnectionState::LastSerialOperationNotCompleted;
+}
+
