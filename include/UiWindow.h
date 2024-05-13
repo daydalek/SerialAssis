@@ -39,7 +39,7 @@ public:
     QPushButton *ReceiveDataButton;
     QListView *SerialList;
     QListView *BaudRateList;
-    QLabel *label;
+    QPushButton *ChooseBaudRate;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menu;
@@ -84,9 +84,9 @@ public:
         BaudRateList = new QListView(centralwidget);
         BaudRateList->setObjectName("BaudRateList");
         BaudRateList->setGeometry(QRect(340, 190, 141, 51));
-        label = new QLabel(centralwidget);
-        label->setObjectName("label");
-        label->setGeometry(QRect(380, 250, 54, 16));
+        ChooseBaudRate = new QPushButton(centralwidget);
+        ChooseBaudRate->setObjectName("ChooseBaudRate");
+        ChooseBaudRate->setGeometry(QRect(370, 260, 75, 24));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -115,7 +115,7 @@ public:
         DropToSendLabel->setText(QCoreApplication::translate("MainWindow", "   \346\213\226\346\213\275\345\210\260\346\255\244\345\244\204\344\273\245\345\217\221\351\200\201\346\226\207\344\273\266", nullptr));
         SendDataButton->setText(QCoreApplication::translate("MainWindow", "\345\217\221\351\200\201\346\225\260\346\215\256", nullptr));
         ReceiveDataButton->setText(QCoreApplication::translate("MainWindow", "\346\216\245\346\224\266\346\225\260\346\215\256", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "  \346\263\242\347\211\271\347\216\207", nullptr));
+        ChooseBaudRate->setText(QCoreApplication::translate("MainWindow", "\351\200\211\346\213\251\346\263\242\347\211\271\347\216\207", nullptr));
         menu->setTitle(QCoreApplication::translate("MainWindow", "\344\270\262\345\217\243\344\274\240\350\276\223", nullptr));
     } // retranslateUi
 

@@ -1,12 +1,10 @@
-//
-// Created by daydalek on 24-5-12.
-//
 
 #include "../include/MainWindow.h"
 #include "../include/SerialConnection.h"
 #include <QMessageBox>
 #include <QStandardItemModel>
 #include <QTimer>
+#include <QDebug>
 #include <QSerialPortInfo>
 
 
@@ -14,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     connectSlots();
     this->SerialPortModel = new QStandardItemModel(this);
-    this->BaudRateModel=new QStandardItemModel(this);
+    this->BaudRateModel = new QStandardItemModel(this);
     initBaudRate();
     getAvaliableSerialPorts();
     auto *RefreshSerialPortList = new QTimer(this);
@@ -27,20 +25,39 @@ MainWindow::~MainWindow() {
     delete UiSerialConnection;
 }
 
+/**
+ * get all available serial ports and append them to SerialList
+ */
 void MainWindow::getAvaliableSerialPorts() {
     QList<QSerialPortInfo> SerialPorts = QSerialPortInfo::availablePorts();
+    // for(auto &SerialPort: SerialPorts){
+    // qDebug() << SerialPort.portName();
+    // }
+    if (SerialPorts.empty()) {
+        qDebug() << "No Serial Ports Found";
+        return;
+    }
     this->SerialPortModel->clear();
     for (const auto &SerialPort: SerialPorts) {
         auto *NewItem = new QStandardItem(SerialPort.portName());
+        // qDebug() << SerialPort.portName();
         this->SerialPortModel->appendRow(NewItem);
     }
     ui->SerialList->setModel(this->SerialPortModel);
 }
 
+/**
+ * insert all baud rates in BaudRateList to BaudRateModel
+ * BaudRate:9600,19200,38400,57600,115200
+ default at Baud9600
+ */
 void MainWindow::initBaudRate() {
     for (const auto &BaudRate: this->BaudRateList) {
         auto *NewItem = new QStandardItem(QString::number(BaudRate));
+        NewItem->setData(QString::number(BaudRate));
+        // std::cout << QString::number(BaudRate).toStdString() << std::endl;
         this->BaudRateModel->appendRow(NewItem);
+        // std::cout << NewItem->data().toString().toStdString() << std::endl;
     }
     ui->BaudRateList->setModel(this->BaudRateModel);
 }
@@ -55,6 +72,7 @@ void MainWindow::connectSlots() {
     connect(ui->StopConnectionButton, &QPushButton::clicked, this, this->terminateConnection);
     connect(ui->SendDataButton, &QPushButton::clicked, this, this->sendData);
     connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->receiveData);
+    connect(ui->ChooseBaudRate, &QPushButton::clicked, this, this->chooseBaudRate);
 }
 
 /**
@@ -63,13 +81,14 @@ void MainWindow::connectSlots() {
  */
 
 void MainWindow::createConnection() {
-    if(ui->SerialList->currentIndex().isValid()) {
+    if (ui->SerialList->currentIndex().isValid()) {
         QString SerialPortName = ui->SerialList->currentIndex().data().toString();
-        // assert(SerialPortName != "");
-        QSerialPort::BaudRate BaudRate = static_cast<QSerialPort::BaudRate>(ui->BaudRateList->currentIndex().data().
-            toInt());
-        this->UiSerialConnection = new SerialConnection(SerialPortName.toStdString(), BaudRate);
-    }else {
+        if (this->UiSerialConnection != nullptr) {
+            QMessageBox::warning(this, "Error", "Serial Port Already Opened");
+            return;
+        }
+        this->UiSerialConnection = new SerialConnection(SerialPortName, this->CurrentBaudRate);
+    } else {
         QMessageBox::warning(this, "Error", "Serial Port Not Selected");
     }
 }
@@ -82,18 +101,18 @@ void MainWindow::createConnection() {
  */
 
 void MainWindow::terminateConnection() {
-    if(this->UiSerialConnection == nullptr){
+    if (this->UiSerialConnection == nullptr) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
     auto State = this->UiSerialConnection->closeConnection();
-    if (State == SerialConnectionState::NoError) {
-        delete this->UiSerialConnection;
-    } else {
+    if (State == SerialConnectionState::LastSerialOperationNotCompleted) {
         /*
          *Possible State:SerialConnectionState::LastSerialOperationNotCompleted
          */
         QMessageBox::warning(this, "Error", "Last Serial Operation Not Completed");
+    } else {
+        this->UiSerialConnection = nullptr;
     }
 }
 
@@ -118,12 +137,36 @@ void MainWindow::sendData() {
     }
 }
 
+/**
+ * receive data from another device by calling SerialConnection::ReadString()
+ * Error Code SerialConnection::NothingToBeReaded is used to show warning MessageBox
+ * that there is no data to be readed
+ */
+
 void MainWindow::receiveData() {
     if (this->UiSerialConnection == nullptr) {
-        QMessageBox::warning(this, "Error", "Seiral Port Not Opened");
+        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
     // assert(this->UiSerialConnection != nullptr);
     auto Data = this->UiSerialConnection->readString();
     ui->DataToSendTextBox->setText(QString::fromUtf8(Data));
+}
+
+/**
+ * choose a new baud rate from BaudRateList and store it in CurrentBaudRate
+ * BaudRate is applied when the SerialConnection is closed and reopened
+ */
+void MainWindow::chooseBaudRate() {
+    if (this->ui->BaudRateList->currentIndex().isValid()) {
+        auto BaudRateSelected = ui->BaudRateList->currentIndex().data().toString().toInt();
+        if (this->UiSerialConnection == nullptr) {
+            QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+            return;
+        }
+        this->CurrentBaudRate = static_cast<QSerialPort::BaudRate>(BaudRateSelected);
+    } else {
+        return; //BaudRate remains the same
+        // this->CurrentBaudRate = QSerialPort::Baud9600;
+    }
 }

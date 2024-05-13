@@ -3,7 +3,10 @@
 //
 
 #include "../include/SerialConnection.h"
+
+#include <iostream>
 #include <QFile>
+#include <QDebug>
 
 /**
  *
@@ -12,12 +15,18 @@
  * \return a SerialConnection object
  */
 
-SerialConnection::SerialConnection(const std::string &SerialPortName,
-                                   QSerialPort::BaudRate BaudRate = QSerialPort::Baud9600) {
-    SerialPort = new QSerialPort(QString::fromStdString(SerialPortName));
+SerialConnection::SerialConnection(const QString &SerialPortName,
+                                   QSerialPort::BaudRate BaudRate) {
+    SerialPort = new QSerialPort();
+    SerialPort->setPortName(SerialPortName);
     SerialPort->setBaudRate(BaudRate);
     SerialPort->open(QIODevice::ReadWrite);
-    CurrentConnectedSerialPortName = QString::fromStdString(SerialPortName);
+    std::cout << SerialPortName.toStdString() << ' ';
+    if (SerialPort->isOpen())
+        qDebug() << "SerialPort Opened";
+    else
+        qDebug() << "SerialPort Open failed";
+    CurrentConnectedSerialPortName = SerialPortName;
     CurrentConnectedSerialPortBaudRate = BaudRate;
 }
 
@@ -44,9 +53,9 @@ SerialConnectionState SerialConnection::writeString(const QByteArray &data) cons
  * @param filename as the name of the file to send via serial connection
  * @return
  */
-SerialConnectionState SerialConnection::writeFile(const std::string &filename) const {
+SerialConnectionState SerialConnection::writeFile(const QString &filename) const {
     assert(SerialPort != nullptr);
-    QFile file(QString::fromStdString(filename));
+    QFile file(filename);
     if (!file.open(QIODevice::ReadOnly)) {
         return SerialConnectionState::FileNotFound;
     }
@@ -62,7 +71,7 @@ SerialConnectionState SerialConnection::writeFile(const std::string &filename) c
 
 /**
  *  read the data inputted in the TextEdit widget on another device
- * @return
+ * @return the data readed
  */
 QByteArray SerialConnection::readString() const {
     assert(SerialPort != nullptr);
@@ -75,12 +84,11 @@ QByteArray SerialConnection::readString() const {
 
 /**
  *
- * @param newFileName as the file name to be created to save the data received
- * @return
+ * @param NewFileName as the file name to be created to save the data received
  */
-SerialConnectionState SerialConnection::readFile(const std::string &newFileName) const {
+SerialConnectionState SerialConnection::readFile(const QString &NewFileName) const {
     assert(SerialPort != nullptr);
-    QFile file(QString::fromStdString(newFileName));
+    QFile file(NewFileName);
     if (SerialPort->bytesAvailable() == 0) {
         return SerialConnectionState::NothingToBeReaded;
     }
@@ -100,4 +108,3 @@ SerialConnectionState SerialConnection::closeConnection() const {
         return SerialConnectionState::NoError;
     } else return SerialConnectionState::LastSerialOperationNotCompleted;
 }
-

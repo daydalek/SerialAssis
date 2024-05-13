@@ -23,10 +23,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    QSerialPort::BaudRate CurrentBaudRate = QSerialPort::Baud9600;
     SerialConnection *UiSerialConnection{};
     QStandardItemModel *SerialPortModel;
     QStandardItemModel *BaudRateModel{};
-    std::vector<QSerialPort::BaudRate> BaudRateList={
+    std::vector<QSerialPort::BaudRate> BaudRateList = {
         QSerialPort::Baud9600,
         QSerialPort::Baud19200,
         QSerialPort::Baud38400,
@@ -47,6 +48,7 @@ private slots:
 
     void initBaudRate();
 
+    void chooseBaudRate();
 };
 
 #endif //MAINWINDOW_H

@@ -145,17 +145,17 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QPushButton" name="ChooseBaudRate">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>250</y>
-      <width>54</width>
-      <height>16</height>
+      <x>370</x>
+      <y>260</y>
+      <width>75</width>
+      <height>24</height>
      </rect>
     </property>
     <property name="text">
-     <string>  波特率</string>
+     <string>选择波特率</string>
     </property>
    </widget>
   </widget>

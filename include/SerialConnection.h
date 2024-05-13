@@ -6,7 +6,6 @@
 #define SERIAL_CONNECTION_H
 #include <string>
 #include <QSerialPort>
-#include <set>
 
 enum class SerialConnectionState {
     NoError,
@@ -21,17 +20,17 @@ enum class SerialConnectionState {
 
 class SerialConnection {
 public:
-    SerialConnection(const std::string &SerialPortName, QSerialPort::BaudRate BaudRate);
+    SerialConnection(const QString& SerialPortName, QSerialPort::BaudRate BaudRate=QSerialPort::Baud9600);
 
     ~SerialConnection();
 
     [[nodiscard]] SerialConnectionState writeString(const QByteArray &data) const;
 
-    [[nodiscard]] SerialConnectionState writeFile(const std::string &filename) const;
+    [[nodiscard]] SerialConnectionState writeFile(const QString& filename) const;
 
     [[nodiscard]] QByteArray readString() const;
 
-    [[nodiscard]] SerialConnectionState readFile(const std::string &newFileName) const;
+    [[nodiscard]] SerialConnectionState readFile(const QString& NewFileName) const;
 
     [[nodiscard]] SerialConnectionState closeConnection() const;
 
@@ -40,6 +39,5 @@ private:
     QSerialPort *SerialPort;
     QString CurrentConnectedSerialPortName;
     QSerialPort::BaudRate CurrentConnectedSerialPortBaudRate;
-
 };
 #endif //SERIAL_CONNECTION_H
