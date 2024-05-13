@@ -31,7 +31,7 @@ SerialConnection::~SerialConnection() {
  * @param data as the data to be written, which is inputted in the TextEdit widget in user interface
  * @return
  */
-SerialConnectionState SerialConnection::WriteString(const QByteArray &data) const {
+SerialConnectionState SerialConnection::writeString(const QByteArray &data) const {
     assert(SerialPort != nullptr);
     if (SerialPort->write(data) == -1) {
         return SerialConnectionState::SerialPortNotOpened;
@@ -44,7 +44,7 @@ SerialConnectionState SerialConnection::WriteString(const QByteArray &data) cons
  * @param filename as the name of the file to send via serial connection
  * @return
  */
-SerialConnectionState SerialConnection::WriteFile(const std::string &filename) const {
+SerialConnectionState SerialConnection::writeFile(const std::string &filename) const {
     assert(SerialPort != nullptr);
     QFile file(QString::fromStdString(filename));
     if (!file.open(QIODevice::ReadOnly)) {
@@ -64,7 +64,7 @@ SerialConnectionState SerialConnection::WriteFile(const std::string &filename) c
  *  read the data inputted in the TextEdit widget on another device
  * @return
  */
-QByteArray SerialConnection::ReadString() const {
+QByteArray SerialConnection::readString() const {
     assert(SerialPort != nullptr);
     if (SerialPort->bytesAvailable() == 0) {
         return nullptr;
@@ -78,7 +78,7 @@ QByteArray SerialConnection::ReadString() const {
  * @param newFileName as the file name to be created to save the data received
  * @return
  */
-SerialConnectionState SerialConnection::ReadFile(const std::string &newFileName) const {
+SerialConnectionState SerialConnection::readFile(const std::string &newFileName) const {
     assert(SerialPort != nullptr);
     QFile file(QString::fromStdString(newFileName));
     if (SerialPort->bytesAvailable() == 0) {
@@ -93,7 +93,7 @@ SerialConnectionState SerialConnection::ReadFile(const std::string &newFileName)
  * 
  * @return SerialPort is closed only when last operation is finished(which is no bytes to read and no bytes to write)
  */
-SerialConnectionState SerialConnection::CloseConnection() const {
+SerialConnectionState SerialConnection::closeConnection() const {
     assert(SerialPort != nullptr);
     if (SerialPort->bytesAvailable() == 0 && SerialPort->bytesToWrite() == 0) {
         SerialPort->close();

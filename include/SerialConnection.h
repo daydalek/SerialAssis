@@ -24,15 +24,15 @@ public:
 
     ~SerialConnection();
 
-    [[nodiscard]] SerialConnectionState WriteString(const QByteArray &data) const;
+    [[nodiscard]] SerialConnectionState writeString(const QByteArray &data) const;
 
-    [[nodiscard]] SerialConnectionState WriteFile(const std::string &filename) const;
+    [[nodiscard]] SerialConnectionState writeFile(const std::string &filename) const;
 
-    [[nodiscard]] QByteArray ReadString() const;
+    [[nodiscard]] QByteArray readString() const;
 
-    [[nodiscard]] SerialConnectionState ReadFile(const std::string &newFileName) const;
+    [[nodiscard]] SerialConnectionState readFile(const std::string &newFileName) const;
 
-    [[nodiscard]] SerialConnectionState CloseConnection() const;
+    [[nodiscard]] SerialConnectionState closeConnection() const;
 
 
 private:

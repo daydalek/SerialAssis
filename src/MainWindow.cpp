@@ -5,35 +5,63 @@
 #include "../include/MainWindow.h"
 #include "../include/SerialConnection.h"
 #include <QMessageBox>
+#include <QStandardItemModel>
+#include <QTimer>
+#include <QSerialPortInfo>
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    // ConnectSlots();
+    connectSlots();
+    this->SerialPortModel = new QStandardItemModel(this);
+    getAvaliableSerialPorts();
+    auto *RefreshSerialPortList = new QTimer(this);
+    connect(RefreshSerialPortList, &QTimer::timeout, this, &MainWindow::getAvaliableSerialPorts);
+    RefreshSerialPortList->start(5000);
 }
 
 MainWindow::~MainWindow() {
     delete ui;
+    delete UiSerialConnection;
 }
+
+void MainWindow::getAvaliableSerialPorts() {
+    QList<QSerialPortInfo> SerialPorts = QSerialPortInfo::availablePorts();
+    this->SerialPortModel->clear();
+    for (const auto &SerialPort: SerialPorts) {
+        auto *NewItem = new QStandardItem(SerialPort.portName());
+        this->SerialPortModel->appendRow(NewItem);
+    }
+    ui->SerialList->setModel(this->SerialPortModel);
+}
+
 
 /**
 * connect all buttons,lists and text widgets to slot functions
 */
-void MainWindow::ConnectSlots() {
-    connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, this->CreateConnection);
-    connect(ui->StopConnectionButton, &QPushButton::clicked, this, this->TerminateConnection);
-    connect(ui->SendDataButton, &QPushButton::clicked, this, this->SendData);
-    connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->ReceiveData);
+
+void MainWindow::connectSlots() {
+    connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, this->createConnection);
+    connect(ui->StopConnectionButton, &QPushButton::clicked, this, this->terminateConnection);
+    connect(ui->SendDataButton, &QPushButton::clicked, this, this->sendData);
+    connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->receiveData);
 }
 
 /**
  * get selected serial port name in SerialList and create a connection with it's name
- * get selected baud rate in BaudRateList and use it as the BaudRate of the Connection,default at Baud9600
+ * get selected baud rate in BaudRateList and use it as the baudrate of the connection,default at Baud9600
  */
-void MainWindow::CreateConnection() {
-    QString SerialPortName = ui->SerialList->currentIndex().data().toString();
-    QSerialPort::BaudRate BaudRate = static_cast<QSerialPort::BaudRate>(ui->BaudRateList->currentIndex().data().
-        toInt());
-    this->UiSerialConnection = new SerialConnection(SerialPortName.toStdString(), BaudRate);
+
+void MainWindow::createConnection() {
+    if(ui->SerialList->currentIndex().isValid()) {
+        QString SerialPortName = ui->SerialList->currentIndex().data().toString();
+        // assert(SerialPortName != "");
+        QSerialPort::BaudRate BaudRate = static_cast<QSerialPort::BaudRate>(ui->BaudRateList->currentIndex().data().
+            toInt());
+        this->UiSerialConnection = new SerialConnection(SerialPortName.toStdString(), BaudRate);
+    }else {
+        QMessageBox::warning(this, "Error", "Serial Port Not Selected");
+    }
 }
 
 
@@ -43,8 +71,12 @@ void MainWindow::CreateConnection() {
 * show warning MessageBox when close operation failed
  */
 
-void MainWindow::TerminateConnection() {
-    auto State = this->UiSerialConnection->CloseConnection();
+void MainWindow::terminateConnection() {
+    if(this->UiSerialConnection == nullptr){
+        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+        return;
+    }
+    auto State = this->UiSerialConnection->closeConnection();
     if (State == SerialConnectionState::NoError) {
         delete this->UiSerialConnection;
     } else {
@@ -60,12 +92,28 @@ void MainWindow::TerminateConnection() {
  * Error Code SerialConnection::SerialPortNotOpened is used to show warning MessageBox
  * that SerialConnection hasn't established yet
  */
-void MainWindow::SendData() {
-    auto State = this->UiSerialConnection->WriteString(ui->DataToSendTextBox->toPlainText().toUtf8());
+
+void MainWindow::sendData() {
+    if (this->UiSerialConnection == nullptr) {
+        QMessageBox::warning(this, "Error", "Seiral Port Not Opened");
+        return;
+    }
+    // assert(this->UiSerialConnection != nullptr);
+    auto State = this->UiSerialConnection->writeString(ui->DataToSendTextBox->toPlainText().toUtf8());
     /*
      * Possible State:SerialConnectionState::SerialPortNotOpened
      */
     if (State == SerialConnectionState::SerialPortNotOpened) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
     }
+}
+
+void MainWindow::receiveData() {
+    if (this->UiSerialConnection == nullptr) {
+        QMessageBox::warning(this, "Error", "Seiral Port Not Opened");
+        return;
+    }
+    // assert(this->UiSerialConnection != nullptr);
+    auto Data = this->UiSerialConnection->readString();
+    ui->DataToSendTextBox->setText(QString::fromUtf8(Data));
 }

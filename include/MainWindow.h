@@ -5,6 +5,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QStandardItemModel>
+
 #include "MainWindow.h"
 #include "SerialConnection.h"
 #include "UiWindow.h"
@@ -15,22 +17,25 @@ class MainWindow : public QMainWindow {
 public:
     explicit MainWindow(QWidget *parent = nullptr);
 
-    ~MainWindow();
+    void getAvaliableSerialPorts();
+
+    ~MainWindow() override;
 
 private:
     Ui::MainWindow *ui;
     SerialConnection *UiSerialConnection{};
+    QStandardItemModel *SerialPortModel;
 
 private slots:
-    void ConnectSlots();
+    void connectSlots();
 
-    void CreateConnection();
+    void createConnection();
 
-    void TerminateConnection();
+    void terminateConnection();
 
-    void SendData();
+    void sendData();
 
-    void ReceiveData();
+    void receiveData();
 };
 
 #endif //MAINWINDOW_H
