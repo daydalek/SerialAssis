@@ -17,7 +17,7 @@
    <widget class="QPushButton" name="EstablishConnectionButton">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>60</x>
       <y>190</y>
       <width>71</width>
       <height>18</height>
@@ -30,7 +30,7 @@
    <widget class="QPushButton" name="StopConnectionButton">
     <property name="geometry">
      <rect>
-      <x>50</x>
+      <x>60</x>
       <y>220</y>
       <width>71</width>
       <height>18</height>
@@ -38,16 +38,6 @@
     </property>
     <property name="text">
      <string>断开连接</string>
-    </property>
-   </widget>
-   <widget class="QListView" name="SerialList">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>50</y>
-      <width>71</width>
-      <height>121</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLabel" name="SerialListLabel">
@@ -135,6 +125,39 @@
      <string>接收数据</string>
     </property>
    </widget>
+   <widget class="QListView" name="SerialList">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>50</y>
+      <width>73</width>
+      <height>121</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListView" name="BaudRateList">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>190</y>
+      <width>141</width>
+      <height>51</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>250</y>
+      <width>54</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>  波特率</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
@@ -143,7 +166,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">

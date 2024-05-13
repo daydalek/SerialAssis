@@ -6,8 +6,8 @@
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef UIWINDOW_H
+#define UIWINDOW_H
 
 #include <QtCore/QVariant>
 #include <QtGui/QAction>
@@ -30,7 +30,6 @@ public:
     QWidget *centralwidget;
     QPushButton *EstablishConnectionButton;
     QPushButton *StopConnectionButton;
-    QListView *SerialList;
     QLabel *SerialListLabel;
     QTextEdit *DataToSendTextBox;
     QLabel *SendReceiveLabel;
@@ -38,6 +37,9 @@ public:
     QLabel *DropToSendLabel;
     QPushButton *SendDataButton;
     QPushButton *ReceiveDataButton;
+    QListView *SerialList;
+    QListView *BaudRateList;
+    QLabel *label;
     QStatusBar *statusbar;
     QMenuBar *menubar;
     QMenu *menu;
@@ -51,13 +53,10 @@ public:
         centralwidget->setObjectName("centralwidget");
         EstablishConnectionButton = new QPushButton(centralwidget);
         EstablishConnectionButton->setObjectName("EstablishConnectionButton");
-        EstablishConnectionButton->setGeometry(QRect(50, 190, 71, 18));
+        EstablishConnectionButton->setGeometry(QRect(60, 190, 71, 18));
         StopConnectionButton = new QPushButton(centralwidget);
         StopConnectionButton->setObjectName("StopConnectionButton");
-        StopConnectionButton->setGeometry(QRect(50, 220, 71, 18));
-        SerialList = new QListView(centralwidget);
-        SerialList->setObjectName("SerialList");
-        SerialList->setGeometry(QRect(50, 50, 71, 121));
+        StopConnectionButton->setGeometry(QRect(60, 220, 71, 18));
         SerialListLabel = new QLabel(centralwidget);
         SerialListLabel->setObjectName("SerialListLabel");
         SerialListLabel->setGeometry(QRect(50, 20, 71, 20));
@@ -79,13 +78,22 @@ public:
         ReceiveDataButton = new QPushButton(centralwidget);
         ReceiveDataButton->setObjectName("ReceiveDataButton");
         ReceiveDataButton->setGeometry(QRect(160, 220, 141, 18));
+        SerialList = new QListView(centralwidget);
+        SerialList->setObjectName("SerialList");
+        SerialList->setGeometry(QRect(60, 50, 73, 121));
+        BaudRateList = new QListView(centralwidget);
+        BaudRateList->setObjectName("BaudRateList");
+        BaudRateList->setGeometry(QRect(340, 190, 141, 51));
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+        label->setGeometry(QRect(380, 250, 54, 16));
         MainWindow->setCentralWidget(centralwidget);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
         MainWindow->setStatusBar(statusbar);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 17));
+        menubar->setGeometry(QRect(0, 0, 800, 22));
         menu = new QMenu(menubar);
         menu->setObjectName("menu");
         MainWindow->setMenuBar(menubar);
@@ -97,7 +105,7 @@ public:
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow) const
+    void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         EstablishConnectionButton->setText(QCoreApplication::translate("MainWindow", "\345\273\272\347\253\213\350\277\236\346\216\245", nullptr));
@@ -107,6 +115,7 @@ public:
         DropToSendLabel->setText(QCoreApplication::translate("MainWindow", "   \346\213\226\346\213\275\345\210\260\346\255\244\345\244\204\344\273\245\345\217\221\351\200\201\346\226\207\344\273\266", nullptr));
         SendDataButton->setText(QCoreApplication::translate("MainWindow", "\345\217\221\351\200\201\346\225\260\346\215\256", nullptr));
         ReceiveDataButton->setText(QCoreApplication::translate("MainWindow", "\346\216\245\346\224\266\346\225\260\346\215\256", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "  \346\263\242\347\211\271\347\216\207", nullptr));
         menu->setTitle(QCoreApplication::translate("MainWindow", "\344\270\262\345\217\243\344\274\240\350\276\223", nullptr));
     } // retranslateUi
 
@@ -118,4 +127,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // WINDOW_H
+#endif // UIWINDOW_H

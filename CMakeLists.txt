@@ -22,6 +22,7 @@ add_executable(SerialAssis src/main.cpp
         include/UiWindow.h
         src/MainWindow.cpp
         include/MainWindow.h
+        include/UiWindow.h
 )
 target_link_libraries(SerialAssis
         Qt::Core

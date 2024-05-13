@@ -7,7 +7,7 @@
 
 #include "MainWindow.h"
 #include "SerialConnection.h"
-#include"UiWindow.h"
+#include "UiWindow.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -17,21 +17,20 @@ public:
 
     ~MainWindow();
 
-    void ConnectSlots();
-
 private:
     Ui::MainWindow *ui;
-    SerialConnection *serialConnection{};
+    SerialConnection *UiSerialConnection{};
 
 private slots:
+    void ConnectSlots();
+
     void CreateConnection();
 
-    void CloseConnection();
+    void TerminateConnection();
 
     void SendData();
 
     void ReceiveData();
 };
-
 
 #endif //MAINWINDOW_H
