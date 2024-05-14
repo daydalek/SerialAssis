@@ -19,8 +19,8 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     RefreshSerialListButton = new QPushButton("刷新");
     BaudRateList = new QComboBox();
     SerialPortList = new QComboBox();
-    EstablishConnectionButton = new QPushButton("Open");
-    TerminateConnectionButton = new QPushButton("Close");
+    EstablishConnectionButton = new QPushButton("打开串口");
+    TerminateConnectionButton = new QPushButton("关闭串口");
     DateTimeLabel = new QLabel();
     ReceiveControlLayout = new QHBoxLayout();
     SendControlLayout = new QHBoxLayout();
@@ -57,7 +57,7 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     MainLayout->addLayout(RightLayout);
 
     // 设置窗口标题和大小
-    setWindowTitle("串口监视器");
+    setWindowTitle("串口助手");
 
     // 设置定时器更新时间
     auto *timer = new QTimer(this);

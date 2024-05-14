@@ -17,18 +17,19 @@ class MainWindow : public QMainWindow {
   public:
     explicit MainWindow(QWidget *parent = nullptr);
 
-    void getAvaliableSerialPorts();
-
     ~MainWindow() override;
 
+
+
   private:
-    SerialMonitor *ui;
-    SerialConnection *UiSerialConnection{};
-    QStandardItemModel *SerialPortModel;
-    QStandardItemModel *BaudRateModel{};
-    std::vector<QSerialPort::BaudRate> BaudRateList = {QSerialPort::Baud9600, QSerialPort::Baud19200,
-                                                       QSerialPort::Baud38400, QSerialPort::Baud57600,
-                                                       QSerialPort::Baud115200};
+    SerialMonitor                       *ui                         =nullptr;
+    SerialConnection                    *UiHandledSerialConnection  =nullptr;
+    QStandardItemModel                  *SerialPortModel            =nullptr;
+    QStandardItemModel                  *BaudRateModel              =nullptr;
+    std::vector<QSerialPort::BaudRate>  BaudRateList = {QSerialPort::Baud9600,  QSerialPort::Baud19200,
+                                                        QSerialPort::Baud38400, QSerialPort::Baud57600,
+                                                        QSerialPort::Baud115200
+                                                        };
 
   private slots:
     void connectSlots();
@@ -44,6 +45,8 @@ class MainWindow : public QMainWindow {
     void initBaudRate();
 
     void clearAll();
+
+    void getAvaliableSerialPorts();
 };
 
 #endif // MAINWINDOW_H

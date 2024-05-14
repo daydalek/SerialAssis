@@ -8,6 +8,8 @@
 #include <QFile>
 #include <QDebug>
 
+#define SERIAL_UNABLE_TO_WRITE -1
+
 /**
  *
  * @param SerialPortName
@@ -40,19 +42,21 @@ SerialConnection::~SerialConnection() {
  * @param data as the data to be written, which is inputted in the TextEdit widget in user interface
  * @return
  */
+
+
 SerialConnectionState SerialConnection::writeString(const QByteArray &data) const {
     assert(SerialPort != nullptr);
-    if (SerialPort->write(data) == -1) {
+    if (SerialPort->write(data) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
     return SerialConnectionState::NoError;
 }
 
 /**
- *
  * @param filename as the name of the file to send via serial connection
  * @return
  */
+
 SerialConnectionState SerialConnection::writeFile(const QString &filename) const {
     assert(SerialPort != nullptr);
     QFile file(filename);
@@ -73,6 +77,7 @@ SerialConnectionState SerialConnection::writeFile(const QString &filename) const
  *  read the data inputted in the TextEdit widget on another device
  * @return the data readed
  */
+
 QByteArray SerialConnection::readString() const {
     assert(SerialPort != nullptr);
     if (SerialPort->bytesAvailable() == 0) {
@@ -86,6 +91,7 @@ QByteArray SerialConnection::readString() const {
  *
  * @param NewFileName as the file name to be created to save the data received
  */
+
 SerialConnectionState SerialConnection::readFile(const QString &NewFileName) const {
     assert(SerialPort != nullptr);
     QFile file(NewFileName);
@@ -101,6 +107,7 @@ SerialConnectionState SerialConnection::readFile(const QString &NewFileName) con
  * 
  * @return SerialPort is closed only when last operation is finished(which is no bytes to read and no bytes to write)
  */
+
 SerialConnectionState SerialConnection::closeConnection() const {
     assert(SerialPort != nullptr);
     if (SerialPort->bytesAvailable() == 0 && SerialPort->bytesToWrite() == 0) {
@@ -114,6 +121,7 @@ SerialConnectionState SerialConnection::closeConnection() const {
  *
  * @return the name of the current connected serial port
  */
-QString SerialConnection::GetCurrentSerialPortName() const {
+
+QString SerialConnection::getCurrentSerialPortName() const {
     return this->SerialPort->portName();
 }

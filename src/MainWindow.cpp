@@ -18,14 +18,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new SerialMoni
 
 MainWindow::~MainWindow() {
     delete ui;
-    delete UiSerialConnection;
+    delete UiHandledSerialConnection;
 }
 
 /**
  * get all available serial ports and append them to SerialList
  */
+
 void MainWindow::getAvaliableSerialPorts() {
-    if (this->UiSerialConnection != nullptr) {
+    if (this->UiHandledSerialConnection != nullptr) {
         return;
     }
     QList<QSerialPortInfo> SerialPorts = QSerialPortInfo::availablePorts();
@@ -66,13 +67,12 @@ void MainWindow::initBaudRate() {
  */
 
 void MainWindow::connectSlots() {
+    auto *timer = new QTimer(this);
     connect(ui->RefreshSerialListButton, &QPushButton::clicked, this, &MainWindow::getAvaliableSerialPorts);
     connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, this->createConnection);
     connect(ui->TerminateConnectionButton, &QPushButton::clicked, this, this->terminateConnection);
     connect(ui->SendDataButton, &QPushButton::clicked, this, this->sendData);
     connect(ui->ClearButton, &QPushButton::clicked, this, this->clearAll);
-    /*定时刷新ReceivedTextBox*/
-    QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, this->receiveData);
     timer->start(1000);
     // connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->receiveData);
@@ -85,12 +85,12 @@ void MainWindow::connectSlots() {
 
 void MainWindow::createConnection() {
     QString SerialPortName = ui->SerialPortList->currentText();
-    if (this->UiSerialConnection != nullptr) {
+    if (this->UiHandledSerialConnection != nullptr) {
         QMessageBox::warning(this, "Error", "Serial Port Already Opened");
         return;
     }
     QSerialPort::BaudRate CurrentBaudRate = static_cast<QSerialPort::BaudRate>(ui->BaudRateList->currentText().toInt());
-    this->UiSerialConnection = new SerialConnection(SerialPortName, CurrentBaudRate);
+    this->UiHandledSerialConnection = new SerialConnection(SerialPortName, CurrentBaudRate);
 }
 
 /**
@@ -100,11 +100,11 @@ void MainWindow::createConnection() {
  */
 
 void MainWindow::terminateConnection() {
-    if (this->UiSerialConnection == nullptr) {
+    if (this->UiHandledSerialConnection == nullptr) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
-    auto State = this->UiSerialConnection->closeConnection();
+    auto State = this->UiHandledSerialConnection->closeConnection();
     if (State == SerialConnectionState::LastSerialOperationNotCompleted) {
         /*
          *Possible State:SerialConnectionState::LastSerialOperationNotCompleted
@@ -112,7 +112,7 @@ void MainWindow::terminateConnection() {
         QMessageBox::warning(this, "Error", "Last Serial Operation Not Completed");
     } else {
         this->getAvaliableSerialPorts();
-        this->UiSerialConnection = nullptr;
+        this->UiHandledSerialConnection = nullptr;
     }
 }
 
@@ -123,12 +123,12 @@ void MainWindow::terminateConnection() {
  */
 
 void MainWindow::sendData() {
-    if (this->UiSerialConnection == nullptr) {
+    if (this->UiHandledSerialConnection == nullptr) {
         QMessageBox::warning(this, "Error", "Seiral Port Not Opened");
         return;
     }
     // assert(this->UiSerialConnection != nullptr);
-    auto State = this->UiSerialConnection->writeString(ui->DataToSendTextBox->toPlainText().toUtf8());
+    auto State = this->UiHandledSerialConnection->writeString(ui->DataToSendTextBox->toPlainText().toUtf8());
     /*
      * Possible State:SerialConnectionState::SerialPortNotOpened
      */
@@ -144,12 +144,12 @@ void MainWindow::sendData() {
  */
 
 void MainWindow::receiveData() {
-    if (this->UiSerialConnection == nullptr) {
+    if (this->UiHandledSerialConnection == nullptr) {
         // QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
-    // assert(this->UiSerialConnection != nullptr);
-    auto Data = this->UiSerialConnection->readString();
+    assert(this->UiHandledSerialConnection != nullptr);
+    auto Data = this->UiHandledSerialConnection->readString();
     if (Data.isEmpty()) {
         return;
     }
