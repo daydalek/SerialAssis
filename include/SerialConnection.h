@@ -34,6 +34,8 @@ public:
 
     [[nodiscard]] SerialConnectionState closeConnection() const;
 
+    [[nodiscard]] QString GetCurrentSerialPortName() const;
+
 
 private:
     QSerialPort *SerialPort;

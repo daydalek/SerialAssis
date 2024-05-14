@@ -18,10 +18,10 @@ find_package(Qt6 COMPONENTS
 add_executable(SerialAssis src/main.cpp
         src/SerialConnection.cpp
         include/SerialConnection.h
-        src/mainwindow.ui
-        include/UiWindow.h
         src/MainWindow.cpp
         include/MainWindow.h
+        include/UiWindow.h
+        src/UiWindow.cpp
 )
 target_link_libraries(SerialAssis
         Qt::Core

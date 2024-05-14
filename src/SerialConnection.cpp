@@ -106,5 +106,14 @@ SerialConnectionState SerialConnection::closeConnection() const {
     if (SerialPort->bytesAvailable() == 0 && SerialPort->bytesToWrite() == 0) {
         SerialPort->close();
         return SerialConnectionState::NoError;
-    } else return SerialConnectionState::LastSerialOperationNotCompleted;
+    }
+    return SerialConnectionState::LastSerialOperationNotCompleted;
+}
+
+/**
+ *
+ * @return the name of the current connected serial port
+ */
+QString SerialConnection::GetCurrentSerialPortName() const {
+    return this->SerialPort->portName();
 }

@@ -5,37 +5,32 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QStandardItemModel>
-#include <vector>
-#include "MainWindow.h"
 #include "SerialConnection.h"
 #include "UiWindow.h"
+#include <QMainWindow>
+#include <QStandardItemModel>
+#include <vector>
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-public:
+  public:
     explicit MainWindow(QWidget *parent = nullptr);
 
     void getAvaliableSerialPorts();
 
     ~MainWindow() override;
 
-private:
-    Ui::MainWindow *ui;
-    QSerialPort::BaudRate CurrentBaudRate = QSerialPort::Baud9600;
+  private:
+    SerialMonitor *ui;
     SerialConnection *UiSerialConnection{};
     QStandardItemModel *SerialPortModel;
     QStandardItemModel *BaudRateModel{};
-    std::vector<QSerialPort::BaudRate> BaudRateList = {
-        QSerialPort::Baud9600,
-        QSerialPort::Baud19200,
-        QSerialPort::Baud38400,
-        QSerialPort::Baud57600,
-        QSerialPort::Baud115200
-    };
+    std::vector<QSerialPort::BaudRate> BaudRateList = {QSerialPort::Baud9600, QSerialPort::Baud19200,
+                                                       QSerialPort::Baud38400, QSerialPort::Baud57600,
+                                                       QSerialPort::Baud115200};
 
-private slots:
+  private slots:
     void connectSlots();
 
     void createConnection();
@@ -48,7 +43,7 @@ private slots:
 
     void initBaudRate();
 
-    void chooseBaudRate();
+    void clearAll();
 };
 
-#endif //MAINWINDOW_H
+#endif // MAINWINDOW_H

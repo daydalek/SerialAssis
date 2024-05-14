@@ -1,23 +1,19 @@
 
 #include "../include/MainWindow.h"
 #include "../include/SerialConnection.h"
+#include <QDebug>
 #include <QMessageBox>
+#include <QSerialPortInfo>
 #include <QStandardItemModel>
 #include <QTimer>
-#include <QDebug>
-#include <QSerialPortInfo>
 
-
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
-    ui->setupUi(this);
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new SerialMonitor) {
+    setCentralWidget(ui);
     connectSlots();
     this->SerialPortModel = new QStandardItemModel(this);
     this->BaudRateModel = new QStandardItemModel(this);
     initBaudRate();
     getAvaliableSerialPorts();
-    auto *RefreshSerialPortList = new QTimer(this);
-    connect(RefreshSerialPortList, &QTimer::timeout, this, &MainWindow::getAvaliableSerialPorts);
-    RefreshSerialPortList->start(5000);
 }
 
 MainWindow::~MainWindow() {
@@ -29,6 +25,9 @@ MainWindow::~MainWindow() {
  * get all available serial ports and append them to SerialList
  */
 void MainWindow::getAvaliableSerialPorts() {
+    if (this->UiSerialConnection != nullptr) {
+        return;
+    }
     QList<QSerialPortInfo> SerialPorts = QSerialPortInfo::availablePorts();
     // for(auto &SerialPort: SerialPorts){
     // qDebug() << SerialPort.portName();
@@ -38,12 +37,12 @@ void MainWindow::getAvaliableSerialPorts() {
         return;
     }
     this->SerialPortModel->clear();
-    for (const auto &SerialPort: SerialPorts) {
+    for (const auto &SerialPort : SerialPorts) {
         auto *NewItem = new QStandardItem(SerialPort.portName());
         // qDebug() << SerialPort.portName();
         this->SerialPortModel->appendRow(NewItem);
     }
-    ui->SerialList->setModel(this->SerialPortModel);
+    ui->SerialPortList->setModel(this->SerialPortModel);
 }
 
 /**
@@ -52,7 +51,7 @@ void MainWindow::getAvaliableSerialPorts() {
  default at Baud9600
  */
 void MainWindow::initBaudRate() {
-    for (const auto &BaudRate: this->BaudRateList) {
+    for (const auto &BaudRate : this->BaudRateList) {
         auto *NewItem = new QStandardItem(QString::number(BaudRate));
         NewItem->setData(QString::number(BaudRate));
         // std::cout << QString::number(BaudRate).toStdString() << std::endl;
@@ -62,17 +61,21 @@ void MainWindow::initBaudRate() {
     ui->BaudRateList->setModel(this->BaudRateModel);
 }
 
-
 /**
-* connect all buttons,lists and text widgets to slot functions
-*/
+ * connect all buttons,lists and text widgets to slot functions
+ */
 
 void MainWindow::connectSlots() {
+    connect(ui->RefreshSerialListButton, &QPushButton::clicked, this, &MainWindow::getAvaliableSerialPorts);
     connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, this->createConnection);
-    connect(ui->StopConnectionButton, &QPushButton::clicked, this, this->terminateConnection);
+    connect(ui->TerminateConnectionButton, &QPushButton::clicked, this, this->terminateConnection);
     connect(ui->SendDataButton, &QPushButton::clicked, this, this->sendData);
-    connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->receiveData);
-    connect(ui->ChooseBaudRate, &QPushButton::clicked, this, this->chooseBaudRate);
+    connect(ui->ClearButton, &QPushButton::clicked, this, this->clearAll);
+    /*定时刷新ReceivedTextBox*/
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, this->receiveData);
+    timer->start(1000);
+    // connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->receiveData);
 }
 
 /**
@@ -81,23 +84,19 @@ void MainWindow::connectSlots() {
  */
 
 void MainWindow::createConnection() {
-    if (ui->SerialList->currentIndex().isValid()) {
-        QString SerialPortName = ui->SerialList->currentIndex().data().toString();
-        if (this->UiSerialConnection != nullptr) {
-            QMessageBox::warning(this, "Error", "Serial Port Already Opened");
-            return;
-        }
-        this->UiSerialConnection = new SerialConnection(SerialPortName, this->CurrentBaudRate);
-    } else {
-        QMessageBox::warning(this, "Error", "Serial Port Not Selected");
+    QString SerialPortName = ui->SerialPortList->currentText();
+    if (this->UiSerialConnection != nullptr) {
+        QMessageBox::warning(this, "Error", "Serial Port Already Opened");
+        return;
     }
+    QSerialPort::BaudRate CurrentBaudRate = static_cast<QSerialPort::BaudRate>(ui->BaudRateList->currentText().toInt());
+    this->UiSerialConnection = new SerialConnection(SerialPortName, CurrentBaudRate);
 }
 
-
 /**
-* TerminalConnection when StopConnectionButton is clicked by calling SerialConnection::CloseConnection()
-* Error Code SerialConnectionState::LastSerialConnectionNotCompleted is used to
-* show warning MessageBox when close operation failed
+ * TerminalConnection when StopConnectionButton is clicked by calling SerialConnection::CloseConnection()
+ * Error Code SerialConnectionState::LastSerialConnectionNotCompleted is used to
+ * show warning MessageBox when close operation failed
  */
 
 void MainWindow::terminateConnection() {
@@ -112,6 +111,7 @@ void MainWindow::terminateConnection() {
          */
         QMessageBox::warning(this, "Error", "Last Serial Operation Not Completed");
     } else {
+        this->getAvaliableSerialPorts();
         this->UiSerialConnection = nullptr;
     }
 }
@@ -145,28 +145,22 @@ void MainWindow::sendData() {
 
 void MainWindow::receiveData() {
     if (this->UiSerialConnection == nullptr) {
-        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+        // QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
     // assert(this->UiSerialConnection != nullptr);
     auto Data = this->UiSerialConnection->readString();
-    ui->DataToSendTextBox->setText(QString::fromUtf8(Data));
+    if (Data.isEmpty()) {
+        return;
+    }
+    ui->DataReceivedTextBox->setText(QString::fromUtf8(Data));
 }
 
 /**
- * choose a new baud rate from BaudRateList and store it in CurrentBaudRate
- * BaudRate is applied when the SerialConnection is closed and reopened
+ * clear all contents in send and received textbox
  */
-void MainWindow::chooseBaudRate() {
-    if (this->ui->BaudRateList->currentIndex().isValid()) {
-        auto BaudRateSelected = ui->BaudRateList->currentIndex().data().toString().toInt();
-        if (this->UiSerialConnection == nullptr) {
-            QMessageBox::warning(this, "Error", "Serial Port Not Opened");
-            return;
-        }
-        this->CurrentBaudRate = static_cast<QSerialPort::BaudRate>(BaudRateSelected);
-    } else {
-        return; //BaudRate remains the same
-        // this->CurrentBaudRate = QSerialPort::Baud9600;
-    }
+
+void MainWindow::clearAll() {
+    ui->DataToSendTextBox->clear();
+    ui->DataReceivedTextBox->clear();
 }
