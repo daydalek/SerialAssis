@@ -69,11 +69,14 @@ void MainWindow::initBaudRate() {
 void MainWindow::connectSlots() {
     auto *timer = new QTimer(this);
     connect(ui->RefreshSerialListButton, &QPushButton::clicked, this, &MainWindow::getAvaliableSerialPorts);
-    connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, this->createConnection);
-    connect(ui->TerminateConnectionButton, &QPushButton::clicked, this, this->terminateConnection);
-    connect(ui->SendDataButton, &QPushButton::clicked, this, this->sendData);
-    connect(ui->ClearButton, &QPushButton::clicked, this, this->clearAll);
-    connect(timer, &QTimer::timeout, this, this->receiveData);
+    connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, &MainWindow::createConnection);
+    connect(ui->TerminateConnectionButton, &QPushButton::clicked, this, &MainWindow::terminateConnection);
+    connect(ui->SendDataButton, &QPushButton::clicked, this, &MainWindow::sendData);
+    connect(ui->ClearButton, &QPushButton::clicked, this, &MainWindow::clearAll);
+    /*because read data is called every 1 second,so UihandledSerialConnection must be nullptr by
+     * default instead of being undefined , if not , the program crashes 1s after it starts
+     */
+    connect(timer, &QTimer::timeout, this, &MainWindow::receiveData);
     timer->start(1000);
     // connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->receiveData);
 }
@@ -149,6 +152,7 @@ void MainWindow::receiveData() {
         return;
     }
     assert(this->UiHandledSerialConnection != nullptr);
+    /*if UiHandledSerialConnection is not given nullptr before constructed , the program crashes here*/
     auto Data = this->UiHandledSerialConnection->readString();
     if (Data.isEmpty()) {
         return;
