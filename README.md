@@ -2,9 +2,8 @@
 
 ### 1. Introduction
 
-This is a simple serial assistant tool for serial port communication. It is developed by Qt6 under LGPL-3.0 license.
-This program is dynamically linked to Qt dlls.Checkout 
-[LICENSE](LICENSE) for details about the LGPL-3.0 license.
+This is a simple serial assistant tool for serial port communication. It's developed using Qt6 opensource under LGPL-3.0 license.
+Checkout [LICENSE](LICENSE) for details about the LGPL-3.0 license.
 
 ### 2. Code Structure
 
@@ -12,12 +11,17 @@ This program is dynamically linked to Qt dlls.Checkout
 - README.md: This file
 - src: Source code directory
   - main.cpp: Main function
-  - mainwindow.cpp: Main window implementation
-  - SerialConnection.cpp: Serial connection implementation
-  - mainwindow.ui: QT designer ui file
+  - MainWindow.cpp: Main window implementation.
+  - SerialConnection.cpp: Serial connection implementation.
+  - UiWindow.cpp: UI window implementation.
 - include: Header file directory
-  - mainwindow.h: Main window header file
-  - SerialConnection.h: Serial connection header file
-  - UiWindow.h: UI window header file,exported by Qt uic
+  - MainWindow.h: MainWindow header file ,  combining the UI and serial connection together.
+  - SerialConnection.h: SerialConnection header file
+  - UiWindow.h: UiWindow header file ,focus on parts that not related with the connection
 
+### 3. Build
+  You need to have Qt6 installed on your machine. You can download it from [Qt official website](https://www.qt.io/download).
+  Simply modify the CMakeLists.txt file to point out your `CMAKE_PREFIX_PATH`.
+  ![cmake_prefix_path](img/cmake_prefix_path.png)
+  Then you can build the project using QT Creator or Any other IDE that supports CMake.
   
