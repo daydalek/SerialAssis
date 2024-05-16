@@ -23,12 +23,12 @@ SerialConnection::SerialConnection(const QString &SerialPortName,
     SerialPort->setPortName(SerialPortName);
     SerialPort->setBaudRate(BaudRate);
     SerialPort->open(QIODevice::ReadWrite);
-    std::cout << SerialPortName.toStdString() << ' ';
+    // std::cout << SerialPortName.toStdString() << ' ';
     if (SerialPort->isOpen())
         qDebug() << "SerialPort Opened";
     else
         qDebug() << "SerialPort Open failed";
-    CurrentConnectedSerialPortName = SerialPortName;
+    // CurrentConnectedSerialPortName = SerialPortName;
     CurrentConnectedSerialPortBaudRate = BaudRate;
 }
 
@@ -45,7 +45,7 @@ SerialConnection::~SerialConnection() {
 
 
 SerialConnectionState SerialConnection::writeString(const QByteArray &data) const {
-    assert(SerialPort != nullptr);
+    // assert(SerialPort != nullptr);
     if (SerialPort->write(data) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
@@ -58,7 +58,7 @@ SerialConnectionState SerialConnection::writeString(const QByteArray &data) cons
  */
 
 SerialConnectionState SerialConnection::writeFile(const QString &filename) const {
-    assert(SerialPort != nullptr);
+    // assert(SerialPort != nullptr);
     QFile file(filename);
     if (!file.open(QIODevice::ReadOnly)) {
         return SerialConnectionState::FileNotFound;
@@ -79,7 +79,7 @@ SerialConnectionState SerialConnection::writeFile(const QString &filename) const
  */
 
 QByteArray SerialConnection::readString() const {
-    assert(SerialPort != nullptr);
+    // assert(SerialPort != nullptr);
     if (SerialPort->bytesAvailable() == 0) {
         return nullptr;
     }
@@ -93,7 +93,7 @@ QByteArray SerialConnection::readString() const {
  */
 
 SerialConnectionState SerialConnection::readFile(const QString &NewFileName) const {
-    assert(SerialPort != nullptr);
+    // assert(SerialPort != nullptr);
     QFile file(NewFileName);
     if (SerialPort->bytesAvailable() == 0) {
         return SerialConnectionState::NothingToBeReaded;
@@ -109,7 +109,7 @@ SerialConnectionState SerialConnection::readFile(const QString &NewFileName) con
  */
 
 SerialConnectionState SerialConnection::closeConnection() const {
-    assert(SerialPort != nullptr);
+    // assert(SerialPort != nullptr);
     if (SerialPort->bytesAvailable() == 0 && SerialPort->bytesToWrite() == 0) {
         SerialPort->close();
         return SerialConnectionState::NoError;
