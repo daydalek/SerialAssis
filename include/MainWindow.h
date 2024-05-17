@@ -16,10 +16,7 @@ class MainWindow : public QMainWindow {
 
   public:
     explicit MainWindow(QWidget *parent = nullptr);
-
     ~MainWindow() override;
-
-
 
   private:
     SerialMonitor                       *ui                         =nullptr;
@@ -33,19 +30,12 @@ class MainWindow : public QMainWindow {
 
   private slots:
     void connectSlots();
-
     void createConnection();
-
     void terminateConnection();
-
     void sendData();
-
     void receiveData();
-
     void initBaudRate();
-
     void clearAll();
-
     void getAvaliableSerialPorts();
 };
 

@@ -11,8 +11,6 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     RightLayout = new QVBoxLayout();
     DataToSendTextBox = new QTextEdit();
     DataReceivedTextBox = new QTextEdit();
-    HexDisplayCheckBoxReceive = new QCheckBox("16进制");
-    HexDisplayCheckBoxSend = new QCheckBox("16进制");
     ClearButton = new QPushButton("清除");
     SendDataButton = new QPushButton("发送");
     RefreshSerialListButton = new QPushButton("刷新");
@@ -25,14 +23,12 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     SendControlLayout = new QHBoxLayout();
 
     // 左侧布局：接收区
-    ReceiveControlLayout->addWidget(HexDisplayCheckBoxReceive);
     ReceiveControlLayout->addWidget(ClearButton);
 
     LeftLayout->addWidget(new QLabel("接收区"));
     LeftLayout->addWidget(DataReceivedTextBox);
     LeftLayout->addLayout(ReceiveControlLayout);
 
-    SendControlLayout->addWidget(HexDisplayCheckBoxSend);
     SendControlLayout->addWidget(SendDataButton);
 
     MiddleLayout->addWidget(new QLabel("发送区"));

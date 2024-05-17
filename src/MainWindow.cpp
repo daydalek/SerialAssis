@@ -157,7 +157,8 @@ void MainWindow::receiveData() {
     if (Data.isEmpty()) {
         return;
     }
-    ui->DataReceivedTextBox->setText(QString::fromUtf8(Data));
+    ui->DataReceivedTextBox->moveCursor(QTextCursor::End);
+    ui->DataReceivedTextBox->insertPlainText(QString::fromUtf8(Data));
 }
 
 /**

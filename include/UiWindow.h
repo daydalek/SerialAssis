@@ -27,8 +27,6 @@ class SerialMonitor : public QWidget {
     QHBoxLayout     *SendControlLayout;
     QTextEdit       *DataToSendTextBox;
     QTextEdit       *DataReceivedTextBox;
-    QCheckBox       *HexDisplayCheckBoxReceive;
-    QCheckBox       *HexDisplayCheckBoxSend;
     QPushButton     *ClearButton;
     QPushButton     *SendDataButton;
     QPushButton     *RefreshSerialListButton;
