@@ -131,7 +131,8 @@ void MainWindow::sendData() {
         return;
     }
     // assert(this->UiSerialConnection != nullptr);
-    auto State = this->UiHandledSerialConnection->writeString(ui->DataToSendTextBox->toPlainText().toUtf8());
+    auto State = SerialConnectionState::NoError;
+    State = this->UiHandledSerialConnection->writeString(ui->DataToSendTextBox->toPlainText().toUtf8());
     /*
      * Possible State:SerialConnectionState::SerialPortNotOpened
      */
