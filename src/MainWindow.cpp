@@ -1,7 +1,7 @@
 
 #include "../include/MainWindow.h"
 #include "../include/SerialConnection.h"
-#include <QDebug>
+// #include <QDebug>
 #include <QMessageBox>
 #include <QSerialPortInfo>
 #include <QStandardItemModel>
@@ -34,7 +34,7 @@ void MainWindow::getAvaliableSerialPorts() {
     // qDebug() << SerialPort.portName();
     // }
     if (SerialPorts.empty()) {
-        qDebug() << "No Serial Ports Found";
+        // qDebug() << "No Serial Ports Found";
         return;
     }
     this->SerialPortModel->clear();
@@ -93,7 +93,11 @@ void MainWindow::createConnection() {
         return;
     }
     QSerialPort::BaudRate CurrentBaudRate = static_cast<QSerialPort::BaudRate>(ui->BaudRateList->currentText().toInt());
-    this->UiHandledSerialConnection = new SerialConnection(SerialPortName, CurrentBaudRate);
+    try {
+        this->UiHandledSerialConnection = new SerialConnection(SerialPortName, CurrentBaudRate);
+    } catch (std::runtime_error &e) {
+        QMessageBox::warning(this, "串口打开失败", e.what());
+    }
 }
 
 /**

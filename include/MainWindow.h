@@ -6,7 +6,7 @@
 #define MAINWINDOW_H
 
 #include "SerialConnection.h"
-#include "UiWindow.h"
+#include "SerialMonitor.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <vector>

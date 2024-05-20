@@ -2,7 +2,7 @@
 // Created by daydalek on 24-5-14.
 //
 
-#include "../include/UiWindow.h"
+#include "../include/SerialMonitor.h"
 
 SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     MainLayout = new QHBoxLayout(this);
@@ -54,6 +54,5 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     connect(timer, &QTimer::timeout,
             [this]() { DateTimeLabel->setText(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss")); });
         timer->start(1000);
-    show();
 }
 

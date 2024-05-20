@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_PREFIX_PATH "C:\\Qt\\6.6.3\\mingw_64\\lib\\cmake")
 
@@ -13,6 +14,7 @@ find_package(Qt6 COMPONENTS
         Gui
         Widgets
         SerialPort
+        Test
         REQUIRED)
 
 add_executable(SerialAssis src/main.cpp
@@ -20,14 +22,32 @@ add_executable(SerialAssis src/main.cpp
         include/SerialConnection.h
         src/MainWindow.cpp
         include/MainWindow.h
-        include/UiWindow.h
-        src/UiWindow.cpp
+        include/SerialMonitor.h
+        src/SerialMonitor.cpp
 )
 target_link_libraries(SerialAssis
         Qt::Core
         Qt::Gui
         Qt::Widgets
         Qt::SerialPort
+)
+
+enable_testing()
+
+add_executable(SerialConnectionTest
+        src/SerialConnection.cpp
+        include/SerialConnection.h
+        test/SerialConnectionTest.cpp
+)
+
+add_test(NAME SerialConnectionTest COMMAND SerialConnectionTest)
+
+target_link_libraries(SerialConnectionTest
+        Qt::Core
+        Qt::Gui
+        Qt::Widgets
+        Qt::SerialPort
+        Qt::Test
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)

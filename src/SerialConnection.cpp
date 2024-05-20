@@ -6,7 +6,7 @@
 
 #include <iostream>
 #include <QFile>
-#include <QDebug>
+// #include <QDebug>
 
 #define SERIAL_UNABLE_TO_WRITE -1
 
@@ -23,12 +23,9 @@ SerialConnection::SerialConnection(const QString &SerialPortName,
     SerialPort->setPortName(SerialPortName);
     SerialPort->setBaudRate(BaudRate);
     SerialPort->open(QIODevice::ReadWrite);
-    // std::cout << SerialPortName.toStdString() << ' ';
-    if (SerialPort->isOpen())
-        qDebug() << "SerialPort Opened";
-    else
-        qDebug() << "SerialPort Open failed";
-    // CurrentConnectedSerialPortName = SerialPortName;
+    if(!SerialPort->isOpen()){
+        throw std::runtime_error("Serial Port is not opened");
+    }
     CurrentConnectedSerialPortBaudRate = BaudRate;
 }
 
