@@ -15,7 +15,7 @@ class MainWindow : public QMainWindow {
             ~MainWindow() override;
 
   private:
-    SerialMonitor                       *ui                         =nullptr;
+    SerialMonitor                       *UI                         =nullptr;
     SerialConnection                    *UiHandledSerialConnection  =nullptr;
     QStandardItemModel                  *SerialPortModel            =nullptr;
     QStandardItemModel                  *BaudRateModel              =nullptr;

@@ -10,6 +10,7 @@ Checkout [LICENSE](LICENSE) for details about the LGPL-3.0 license.
 
 - CMakeLists.txt: CMake configuration file
 - README.md: This file
+- README_ZH: Chinese version of README
 - src: Source code directory
   - main.cpp: Main function
   - MainWindow.cpp: Main window implementation.

@@ -6,7 +6,8 @@
 
 ### 代码结构
 - CMakeLists.txt: CMake配置文件
-- README.md: 本文件
+- README_ZH.md: 本文件
+- README.md:英文版本的README
 - src: 源代码目录
     - main.cpp: 主函数
     - MainWindow.cpp: 主窗口实现
@@ -20,7 +21,7 @@
 ### 构建指南
 你需要安装Qt6。你可以从Qt官方网站下载。[Qt official website](https://www.qt.io/download).
 
-只需修改CMakeLists.txt文件，指出你的CMAKE_PREFIX_PATHcmake_prefix_path 
+只需修改CMakeLists.txt文件，指出你的CMAKE_PREFIX_PATH 
 ![cmake_prefix_path](img/cmake_prefix_path.png)
 
-然后你可以使用QT Creator或任何其他支持CMake的IDE来构建项目。
+然后你就可以使用QT Creator或任何其他支持CMake的IDE来构建项目。

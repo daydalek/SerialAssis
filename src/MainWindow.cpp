@@ -7,8 +7,8 @@
 #include <QStandardItemModel>
 #include <QTimer>
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new SerialMonitor) {
-    setCentralWidget(ui);
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), UI(new SerialMonitor) {
+    setCentralWidget(UI);
     connectSlots();
     this->SerialPortModel = new QStandardItemModel(this);
     this->BaudRateModel = new QStandardItemModel(this);
@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new SerialMoni
 }
 
 MainWindow::~MainWindow() {
-    delete ui;
+    delete UI;
     delete UiHandledSerialConnection;
 }
 
@@ -43,7 +43,7 @@ void MainWindow::getAvaliableSerialPorts() {
         // qDebug() << SerialPort.portName();
         this->SerialPortModel->appendRow(NewItem);
     }
-    ui->SerialPortList->setModel(this->SerialPortModel);
+    UI->SerialPortList->setModel(this->SerialPortModel);
 }
 
 /**
@@ -59,7 +59,7 @@ void MainWindow::initBaudRate() {
         this->BaudRateModel->appendRow(NewItem);
         // std::cout << NewItem->data().toString().toStdString() << std::endl;
     }
-    ui->BaudRateList->setModel(this->BaudRateModel);
+    UI->BaudRateList->setModel(this->BaudRateModel);
 }
 
 /**
@@ -67,17 +67,17 @@ void MainWindow::initBaudRate() {
  */
 
 void MainWindow::connectSlots() {
-    connect(ui->RefreshSerialListButton, &QPushButton::clicked, this, &MainWindow::getAvaliableSerialPorts);
-    connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, &MainWindow::createConnection);
-    connect(ui->TerminateConnectionButton, &QPushButton::clicked, this, &MainWindow::terminateConnection);
-    connect(ui->SendDataButton, &QPushButton::clicked, this, &MainWindow::sendText);
-    connect(ui->ClearButton, &QPushButton::clicked, this, &MainWindow::clearAll);
-    connect(ui->SendFileButton, &QPushButton::clicked, this, &MainWindow::sendFile);
+    connect(UI->RefreshSerialListButton, &QPushButton::clicked, this, &MainWindow::getAvaliableSerialPorts);
+    connect(UI->EstablishConnectionButton, &QPushButton::clicked, this, &MainWindow::createConnection);
+    connect(UI->TerminateConnectionButton, &QPushButton::clicked, this, &MainWindow::terminateConnection);
+    connect(UI->SendDataButton, &QPushButton::clicked, this, &MainWindow::sendText);
+    connect(UI->ClearButton, &QPushButton::clicked, this, &MainWindow::clearAll);
+    connect(UI->SendFileButton, &QPushButton::clicked, this, &MainWindow::sendFile);
     /*because read data is called every 1 second,so UihandledSerialConnection must be nullptr by
      * default instead of being undefined,if not,the program crashes 1s after it starts.
      */
-    connect(ui->ReceiveAsTextButton, &QPushButton::clicked, this, &MainWindow::receiveText);
-    connect(ui->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveFile);
+    connect(UI->ReceiveAsTextButton, &QPushButton::clicked, this, &MainWindow::receiveText);
+    connect(UI->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveFile);
     // connect(UiHandledSerialConnection, &SerialConnection::dataWritten, this, &MainWindow::dataWrittenHint);
 }
 
@@ -87,12 +87,12 @@ void MainWindow::connectSlots() {
  */
 
 void MainWindow::createConnection() {
-    QString SerialPortName = ui->SerialPortList->currentText();
+    QString SerialPortName = UI->SerialPortList->currentText();
     if (this->UiHandledSerialConnection != nullptr) {
         QMessageBox::warning(this, "Error", "Serial Port Already Opened");
         return;
     }
-    QSerialPort::BaudRate CurrentBaudRate = static_cast<QSerialPort::BaudRate>(ui->BaudRateList->currentText().toInt());
+    QSerialPort::BaudRate CurrentBaudRate = static_cast<QSerialPort::BaudRate>(UI->BaudRateList->currentText().toInt());
     try {
         this->UiHandledSerialConnection = new SerialConnection(SerialPortName, CurrentBaudRate);
     } catch (std::runtime_error &e) {
@@ -111,8 +111,8 @@ void MainWindow::terminateConnection() {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
-    auto State = this->UiHandledSerialConnection->closeConnection();
-    if (State == SerialConnectionState::LastSerialOperationNotCompleted) {
+    auto ConnectionState = this->UiHandledSerialConnection->closeConnection();
+    if (ConnectionState == SerialConnectionState::LastSerialOperationNotCompleted) {
         /*
          *Possible State:SerialConnectionState::LastSerialOperationNotCompleted
          */
@@ -134,12 +134,12 @@ void MainWindow::sendText() {
         return;
     }
     // assert(this->UiSerialConnection != nullptr);
-    auto State = SerialConnectionState::NoError;
-    State = this->UiHandledSerialConnection->writeData(ui->DataToSendTextBox->toPlainText().toUtf8());
+    auto ConnectionState = SerialConnectionState::NoError;
+    ConnectionState = this->UiHandledSerialConnection->writeData(UI->DataToSendTextBox->toPlainText().toUtf8());
     /*
      * Possible State:SerialConnectionState::SerialPortNotOpened
      */
-    if (State == SerialConnectionState::SerialPortNotOpened) {
+    if (ConnectionState == SerialConnectionState::SerialPortNotOpened) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
     }
 }
@@ -149,16 +149,16 @@ void MainWindow::sendText() {
  * Possible Error Code : SerialConnection::SerialPortNotOpened
  */
 void MainWindow::sendFile() {
-    QString fileName = QFileDialog::getOpenFileName(this, "Open File", QDir::currentPath());
-    if (fileName.isEmpty()) {
+    QString FileName = QFileDialog::getOpenFileName(this, "Open File", QDir::currentPath());
+    if (FileName.isEmpty()) {
         return;
     }
     if (this->UiHandledSerialConnection == nullptr) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
-    auto State = this->UiHandledSerialConnection->writeFile(fileName);
-    if (State == SerialConnectionState::SerialPortNotOpened) {
+    auto ConnectionState = this->UiHandledSerialConnection->writeFile(FileName);
+    if (ConnectionState == SerialConnectionState::SerialPortNotOpened) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
     }
 }
@@ -175,12 +175,12 @@ void MainWindow::receiveText() {
     }
     // assert(this->UiHandledSerialConnection != nullptr);
     /*if UiHandledSerialConnection is not given nullptr before constructed , the program crashes here*/
-    auto Data = this->UiHandledSerialConnection->readData();
-    if (Data.isEmpty()) {
+    auto TextDataFromSerialPort = this->UiHandledSerialConnection->readData();
+    if (TextDataFromSerialPort.isEmpty()) {
         return;
     }
-    ui->DataReceivedTextBox->moveCursor(QTextCursor::End);
-    ui->DataReceivedTextBox->insertPlainText(QString::fromUtf8(Data));
+    UI->DataReceivedTextBox->moveCursor(QTextCursor::End);
+    UI->DataReceivedTextBox->insertPlainText(QString::fromUtf8(TextDataFromSerialPort));
 }
 
 /**
@@ -192,24 +192,24 @@ void MainWindow::receiveFile() {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
-    QString FileName = QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
-    if (FileName.isEmpty()) {
+    QString NameOfFileToSave = QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
+    if (NameOfFileToSave.isEmpty()) {
         return;
     }
-    QByteArray data = this->UiHandledSerialConnection->readData();
-    QFile file(FileName);
+    QByteArray FileDataFromSerialPort = this->UiHandledSerialConnection->readData();
+    QFile file(NameOfFileToSave);
     if (!file.open(QIODevice::WriteOnly)) {
         QMessageBox::warning(this, "Error", "File Open Failed");
         return;
     }
     QDataStream out(&file);
-    out.writeRawData(data.data(), data.size());
+    out.writeRawData(FileDataFromSerialPort.data(), FileDataFromSerialPort.size());
     file.close();
 }
 
 void MainWindow::clearAll() {
-    ui->DataToSendTextBox->clear();
-    ui->DataReceivedTextBox->clear();
+    UI->DataToSendTextBox->clear();
+    UI->DataReceivedTextBox->clear();
 }
 
 void MainWindow::dataWrittenHint() {

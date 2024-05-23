@@ -31,17 +31,17 @@ SerialConnection::~SerialConnection() {
  * @return the Error Code of the operation
  */
 
-SerialConnectionState SerialConnection::writeData(const QByteArray &data) const {
+SerialConnectionState SerialConnection::writeData(const QByteArray &DataToWrite) const {
     // assert(SerialPort != nullptr);
-    if (SerialPort->write(data) == SERIAL_UNABLE_TO_WRITE) {
+    if (SerialPort->write(DataToWrite) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
     // connect(SerialPort, &QSerialPort::bytesWritten, this, &SerialConnection::onBytesWritten);
     return SerialConnectionState::NoError;
 }
 
-SerialConnectionState SerialConnection::writeFile(const QString &NewFileName) const {
-    QFile file(NewFileName);
+SerialConnectionState SerialConnection::writeFile(const QString &NameOfFileToWrite) const {
+    QFile file(NameOfFileToWrite);
     if (!file.open(QIODevice::ReadOnly)) {
         return SerialConnectionState::FileNotFound;
     }
@@ -62,9 +62,9 @@ QByteArray SerialConnection::readData() const {
     if (SerialPort->bytesAvailable() == 0) {
         return nullptr;
     }
-    QByteArray data = SerialPort->readAll();
+    QByteArray DataFromSerialPort = SerialPort->readAll();
     // QMessageBox::information(nullptr, "Data Received", "Data Received Successfully");
-    return data;
+    return DataFromSerialPort;
 }
 
 /**
