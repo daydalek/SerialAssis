@@ -1,7 +1,3 @@
-//
-// Created by daydalek on 24-5-12.
-//
-
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -16,7 +12,7 @@ class MainWindow : public QMainWindow {
 
   public:
     explicit MainWindow(QWidget *parent = nullptr);
-    ~MainWindow() override;
+            ~MainWindow() override;
 
   private:
     SerialMonitor                       *ui                         =nullptr;
@@ -32,11 +28,14 @@ class MainWindow : public QMainWindow {
     void connectSlots();
     void createConnection();
     void terminateConnection();
-    void sendData();
-    void receiveData();
+    void sendText();
+    void sendFile();
+    void receiveText();
+    void receiveFile();
     void initBaudRate();
     void clearAll();
     void getAvaliableSerialPorts();
+    void dataWrittenHint();
 };
 
 #endif // MAINWINDOW_H

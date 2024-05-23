@@ -1,7 +1,7 @@
 
 #include "../include/MainWindow.h"
 #include "../include/SerialConnection.h"
-// #include <QDebug>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QSerialPortInfo>
 #include <QStandardItemModel>
@@ -49,7 +49,7 @@ void MainWindow::getAvaliableSerialPorts() {
 /**
  * insert all baud rates in BaudRateList to BaudRateModel
  * BaudRate:9600,19200,38400,57600,115200
- default at Baud9600
+ * default at Baud9600
  */
 void MainWindow::initBaudRate() {
     for (const auto &BaudRate : this->BaudRateList) {
@@ -67,18 +67,18 @@ void MainWindow::initBaudRate() {
  */
 
 void MainWindow::connectSlots() {
-    auto *timer = new QTimer(this);
     connect(ui->RefreshSerialListButton, &QPushButton::clicked, this, &MainWindow::getAvaliableSerialPorts);
     connect(ui->EstablishConnectionButton, &QPushButton::clicked, this, &MainWindow::createConnection);
     connect(ui->TerminateConnectionButton, &QPushButton::clicked, this, &MainWindow::terminateConnection);
-    connect(ui->SendDataButton, &QPushButton::clicked, this, &MainWindow::sendData);
+    connect(ui->SendDataButton, &QPushButton::clicked, this, &MainWindow::sendText);
     connect(ui->ClearButton, &QPushButton::clicked, this, &MainWindow::clearAll);
+    connect(ui->SendFileButton, &QPushButton::clicked, this, &MainWindow::sendFile);
     /*because read data is called every 1 second,so UihandledSerialConnection must be nullptr by
-     * default instead of being undefined , if not , the program crashes 1s after it starts
+     * default instead of being undefined,if not,the program crashes 1s after it starts.
      */
-    connect(timer, &QTimer::timeout, this, &MainWindow::receiveData);
-    timer->start(1000);
-    // connect(ui->ReceiveDataButton, &QPushButton::clicked, this, this->receiveData);
+    connect(ui->ReceiveAsTextButton, &QPushButton::clicked, this, &MainWindow::receiveText);
+    connect(ui->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveFile);
+    // connect(UiHandledSerialConnection, &SerialConnection::dataWritten, this, &MainWindow::dataWrittenHint);
 }
 
 /**
@@ -125,18 +125,17 @@ void MainWindow::terminateConnection() {
 
 /**
  * send text in TextEdit widget ( DataToSend ) by calling SerialConnection::WriteString()
- * Error Code SerialConnection::SerialPortNotOpened is used to show warning MessageBox
- * that SerialConnection hasn't established yet
+ * Possible Error Code : SerialConnection::SerialPortNotOpened
  */
 
-void MainWindow::sendData() {
+void MainWindow::sendText() {
     if (this->UiHandledSerialConnection == nullptr) {
-        QMessageBox::warning(this, "Error", "Seiral Port Not Opened");
+        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
     // assert(this->UiSerialConnection != nullptr);
     auto State = SerialConnectionState::NoError;
-    State = this->UiHandledSerialConnection->writeString(ui->DataToSendTextBox->toPlainText().toUtf8());
+    State = this->UiHandledSerialConnection->writeData(ui->DataToSendTextBox->toPlainText().toUtf8());
     /*
      * Possible State:SerialConnectionState::SerialPortNotOpened
      */
@@ -146,19 +145,37 @@ void MainWindow::sendData() {
 }
 
 /**
- * receive data from another device by calling SerialConnection::ReadString()
- * Error Code SerialConnection::NothingToBeReaded is used to show warning MessageBox
- * that there is no data to be readed
+ * send file by calling SerialConnection::writeData()
+ * Possible Error Code : SerialConnection::SerialPortNotOpened
  */
-
-void MainWindow::receiveData() {
-    if (this->UiHandledSerialConnection == nullptr) {
-        // QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+void MainWindow::sendFile() {
+    QString fileName = QFileDialog::getOpenFileName(this, "Open File", QDir::currentPath());
+    if (fileName.isEmpty()) {
         return;
     }
-    assert(this->UiHandledSerialConnection != nullptr);
+    if (this->UiHandledSerialConnection == nullptr) {
+        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+        return;
+    }
+    auto State = this->UiHandledSerialConnection->writeFile(fileName);
+    if (State == SerialConnectionState::SerialPortNotOpened) {
+        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+    }
+}
+
+/**
+ * receive data from another device by calling SerialConnection::ReadString()
+ * Possible Error Code : SerialConnection::NothingToBeReaded
+ */
+
+void MainWindow::receiveText() {
+    if (this->UiHandledSerialConnection == nullptr) {
+        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+        return;
+    }
+    // assert(this->UiHandledSerialConnection != nullptr);
     /*if UiHandledSerialConnection is not given nullptr before constructed , the program crashes here*/
-    auto Data = this->UiHandledSerialConnection->readString();
+    auto Data = this->UiHandledSerialConnection->readData();
     if (Data.isEmpty()) {
         return;
     }
@@ -170,7 +187,31 @@ void MainWindow::receiveData() {
  * clear all contents in send and received textbox
  */
 
+void MainWindow::receiveFile() {
+    if (this->UiHandledSerialConnection == nullptr) {
+        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
+        return;
+    }
+    QString FileName = QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
+    if (FileName.isEmpty()) {
+        return;
+    }
+    QByteArray data = this->UiHandledSerialConnection->readData();
+    QFile file(FileName);
+    if (!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::warning(this, "Error", "File Open Failed");
+        return;
+    }
+    QDataStream out(&file);
+    out.writeRawData(data.data(), data.size());
+    file.close();
+}
+
 void MainWindow::clearAll() {
     ui->DataToSendTextBox->clear();
     ui->DataReceivedTextBox->clear();
+}
+
+void MainWindow::dataWrittenHint() {
+    QMessageBox::information(this, "Data Written", "Data Written Successfully");
 }

@@ -16,7 +16,7 @@
 
 class SerialMonitor : public QWidget {
   public:
-    SerialMonitor(QWidget *parent = nullptr);
+    explicit SerialMonitor(QWidget *parent = nullptr);
 
   public:
     QHBoxLayout     *MainLayout;
@@ -29,12 +29,15 @@ class SerialMonitor : public QWidget {
     QTextEdit       *DataReceivedTextBox;
     QPushButton     *ClearButton;
     QPushButton     *SendDataButton;
+    QPushButton     *SendFileButton;
     QPushButton     *RefreshSerialListButton;
     QPushButton     *EstablishConnectionButton;
     QPushButton     *TerminateConnectionButton;
-    QLabel          *DateTimeLabel;
+    QPushButton     *ReceiveAsTextButton;
+    QPushButton     *ReceiveAsFileButton;
     QComboBox       *BaudRateList;
     QComboBox       *SerialPortList;
+    QLabel          *DateTimeLabel;
 };
 
 #endif // UIWINDOW_H

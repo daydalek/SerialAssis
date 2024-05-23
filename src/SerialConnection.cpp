@@ -1,29 +1,21 @@
-//
-// Created by daydalek on 24-5-7.
-//
-
 #include "../include/SerialConnection.h"
-
-#include <iostream>
 #include <QFile>
-// #include <QDebug>
+#include <QMessageBox>
 
 #define SERIAL_UNABLE_TO_WRITE -1
 
 /**
- *
  * @param SerialPortName
  * @param BaudRate as the baudrate for the serial connection , chosed by the user in user interface , default at 9600
- * \return a SerialConnection object
+ * @return a SerialConnection object
  */
 
-SerialConnection::SerialConnection(const QString &SerialPortName,
-                                   QSerialPort::BaudRate BaudRate) {
+SerialConnection::SerialConnection(const QString &SerialPortName, QSerialPort::BaudRate BaudRate) {
     SerialPort = new QSerialPort();
     SerialPort->setPortName(SerialPortName);
     SerialPort->setBaudRate(BaudRate);
     SerialPort->open(QIODevice::ReadWrite);
-    if(!SerialPort->isOpen()){
+    if (!SerialPort->isOpen()) {
         throw std::runtime_error("Serial Port is not opened");
     }
     CurrentConnectedSerialPortBaudRate = BaudRate;
@@ -35,73 +27,47 @@ SerialConnection::~SerialConnection() {
 }
 
 /**
- *
  * @param data as the data to be written, which is inputted in the TextEdit widget in user interface
- * @return
+ * @return the Error Code of the operation
  */
 
-
-SerialConnectionState SerialConnection::writeString(const QByteArray &data) const {
+SerialConnectionState SerialConnection::writeData(const QByteArray &data) const {
     // assert(SerialPort != nullptr);
     if (SerialPort->write(data) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
+    // connect(SerialPort, &QSerialPort::bytesWritten, this, &SerialConnection::onBytesWritten);
     return SerialConnectionState::NoError;
 }
 
-/**
- * @param filename as the name of the file to send via serial connection
- * @return
- */
-
-SerialConnectionState SerialConnection::writeFile(const QString &filename) const {
-    // assert(SerialPort != nullptr);
-    QFile file(filename);
+SerialConnectionState SerialConnection::writeFile(const QString &NewFileName) const {
+    QFile file(NewFileName);
     if (!file.open(QIODevice::ReadOnly)) {
         return SerialConnectionState::FileNotFound;
     }
     QByteArray data = file.readAll();
-    if (SerialPort->bytesToWrite() > 0) {
-        return SerialConnectionState::LastSerialOperationNotCompleted;
-    }
-    if (SerialPort->write(data) == -1) {
+    if (SerialPort->write(data) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
+    // connect(SerialPort, &QSerialPort::bytesWritten, this, &SerialConnection::onBytesWritten);
     return SerialConnectionState::NoError;
 }
 
 /**
- *  read the data inputted in the TextEdit widget on another device
- * @return the data readed
+ *  read the data inputted in the QTextEdit widget on another device
+ * @return the data readed from the serial port
  */
 
-QByteArray SerialConnection::readString() const {
-    // assert(SerialPort != nullptr);
+QByteArray SerialConnection::readData() const {
     if (SerialPort->bytesAvailable() == 0) {
         return nullptr;
     }
     QByteArray data = SerialPort->readAll();
+    // QMessageBox::information(nullptr, "Data Received", "Data Received Successfully");
     return data;
 }
 
 /**
- *
- * @param NewFileName as the file name to be created to save the data received
- */
-
-SerialConnectionState SerialConnection::readFile(const QString &NewFileName) const {
-    // assert(SerialPort != nullptr);
-    QFile file(NewFileName);
-    if (SerialPort->bytesAvailable() == 0) {
-        return SerialConnectionState::NothingToBeReaded;
-    }
-    const QByteArray data = SerialPort->readAll();
-    file.write(data);
-    return SerialConnectionState::NoError;
-}
-
-/**
- * 
  * @return SerialPort is closed only when last operation is finished(which is no bytes to read and no bytes to write)
  */
 
@@ -114,11 +80,7 @@ SerialConnectionState SerialConnection::closeConnection() const {
     return SerialConnectionState::LastSerialOperationNotCompleted;
 }
 
-/**
- *
- * @return the name of the current connected serial port
- */
 
-QString SerialConnection::getCurrentSerialPortName() const {
-    return this->SerialPort->portName();
+void SerialConnection::onBytesWritten() {
+    emit dataWritten();
 }

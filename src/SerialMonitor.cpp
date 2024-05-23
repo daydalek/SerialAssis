@@ -1,7 +1,3 @@
-//
-// Created by daydalek on 24-5-14.
-//
-
 #include "../include/SerialMonitor.h"
 
 SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
@@ -13,6 +9,9 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     DataReceivedTextBox = new QTextEdit();
     ClearButton = new QPushButton("清除");
     SendDataButton = new QPushButton("发送");
+    SendFileButton = new QPushButton("发送文件");
+    ReceiveAsTextButton = new QPushButton("接收为文本");
+    ReceiveAsFileButton = new QPushButton("接收为文件");
     RefreshSerialListButton = new QPushButton("刷新");
     BaudRateList = new QComboBox();
     SerialPortList = new QComboBox();
@@ -22,12 +21,13 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     ReceiveControlLayout = new QHBoxLayout();
     SendControlLayout = new QHBoxLayout();
 
-    // 左侧布局：接收区
     ReceiveControlLayout->addWidget(ClearButton);
 
     LeftLayout->addWidget(new QLabel("接收区"));
     LeftLayout->addWidget(DataReceivedTextBox);
     LeftLayout->addLayout(ReceiveControlLayout);
+    LeftLayout->addWidget(ReceiveAsFileButton);
+    LeftLayout->addWidget(ReceiveAsTextButton);
 
     SendControlLayout->addWidget(SendDataButton);
 
@@ -42,6 +42,7 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     RightLayout->addWidget(SerialPortList);
     RightLayout->addWidget(EstablishConnectionButton);
     RightLayout->addWidget(TerminateConnectionButton);
+    RightLayout->addWidget(SendFileButton);
     RightLayout->addWidget(DateTimeLabel);
 
     MainLayout->addLayout(LeftLayout);
@@ -53,6 +54,5 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     auto *timer = new QTimer(this);
     connect(timer, &QTimer::timeout,
             [this]() { DateTimeLabel->setText(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss")); });
-        timer->start(1000);
+    timer->start(1000);
 }
-

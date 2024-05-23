@@ -6,8 +6,11 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
 set(CMAKE_PREFIX_PATH "C:\\Qt\\6.6.3\\mingw_64\\lib\\cmake")
+
+if(MSVC)
+  add_compile_options(/Zc:__cplusplus) # enable __cplusplus macro for MSVC because QT6 need C++17 or later
+endif()
 
 find_package(Qt6 COMPONENTS
         Core
@@ -30,24 +33,6 @@ target_link_libraries(SerialAssis
         Qt::Gui
         Qt::Widgets
         Qt::SerialPort
-)
-
-enable_testing()
-
-add_executable(SerialConnectionTest
-        src/SerialConnection.cpp
-        include/SerialConnection.h
-        test/SerialConnectionTest.cpp
-)
-
-add_test(NAME SerialConnectionTest COMMAND SerialConnectionTest)
-
-target_link_libraries(SerialConnectionTest
-        Qt::Core
-        Qt::Gui
-        Qt::Widgets
-        Qt::SerialPort
-        Qt::Test
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)

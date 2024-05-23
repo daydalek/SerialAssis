@@ -1,4 +1,5 @@
 ## SerialAssistant
+[中文README](README_ZH.md)
 
 ### 1. Introduction
 

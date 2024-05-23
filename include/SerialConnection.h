@@ -1,6 +1,7 @@
 #ifndef SERIAL_CONNECTION_H
 #define SERIAL_CONNECTION_H
 #include <QSerialPort>
+#include <QObject>
 
 enum class SerialConnectionState {
     FileNotFound,
@@ -11,22 +12,27 @@ enum class SerialConnectionState {
     SerialPortNotOpened
 };
 
-class SerialConnection {
+class SerialConnection : public QObject{
+    Q_OBJECT
 public:
     explicit SerialConnection(const QString& SerialPortName, QSerialPort::BaudRate BaudRate=QSerialPort::Baud9600);
-    ~SerialConnection();
+            ~SerialConnection() override;
 
-    [[nodiscard]] SerialConnectionState writeString(const QByteArray &data) const;
-    [[nodiscard]] SerialConnectionState writeFile(const QString& filename)  const;
-    [[nodiscard]] QByteArray            readString()                        const;
-    [[nodiscard]] SerialConnectionState readFile(const QString& NewFileName)const;
-    [[nodiscard]] SerialConnectionState closeConnection()                   const;
-    [[nodiscard]] QString               getCurrentSerialPortName()          const;
+    [[nodiscard]] SerialConnectionState writeData(const QByteArray &data)       const;
+    [[nodiscard]] SerialConnectionState writeFile(const QString& NewFileName)   const;
+    [[nodiscard]] SerialConnectionState closeConnection()                       const;
+    [[nodiscard]] QByteArray            readData()                              const;
 
+    signals:
+    void dataWritten();
+    void dataReceived();
 
 private:
     QSerialPort             *SerialPort{};
-    QString                 CurrentConnectedSerialPortName;
     QSerialPort::BaudRate   CurrentConnectedSerialPortBaudRate;
+    QString                 CurrentConnectedSerialPortName;
+
+private slots:
+    void onBytesWritten();
 };
 #endif //SERIAL_CONNECTION_H
