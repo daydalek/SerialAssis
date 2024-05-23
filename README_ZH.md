@@ -11,11 +11,11 @@
     - main.cpp: 主函数
     - MainWindow.cpp: 主窗口实现
     - SerialConnection.cpp: 串口连接实现 
-    - SerialMonitor.cpp: UI窗口实现
+    - SerialMonitor.cpp: SerialMonitor窗口实现
 - include: 头文件目录
     - MainWindow.h: MainWindow头文件，将UI和串口连接结合在一起
     - SerialConnection.h: SerialConnection头文件
-    - SerialMonitor.h: UiWindow头文件，关注与连接无关的部分
+    - SerialMonitor.h: SerialMonitor头文件，关注与连接无关的部分
 
 ### 构建指南
 你需要安装Qt6。你可以从Qt官方网站下载。[Qt official website](https://www.qt.io/download).

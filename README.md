@@ -14,11 +14,11 @@ Checkout [LICENSE](LICENSE) for details about the LGPL-3.0 license.
   - main.cpp: Main function
   - MainWindow.cpp: Main window implementation.
   - SerialConnection.cpp: Serial connection implementation.
-  - SerialMonitor.cpp: UI window implementation.
+  - SerialMonitor.cpp: SerialMonitor implementation.
 - include: Header file directory
   - MainWindow.h: MainWindow header file ,  combining the UI and serial connection together.
   - SerialConnection.h: SerialConnection header file
-  - SerialMonitor.h: UiWindow header file ,focus on parts that not related with the connection
+  - SerialMonitor.h: SerialMonitor header file ,focus on parts that not related with the connection
 
 ### 3. Build
   You need to have Qt6 installed on your machine. You can download it from [Qt official website](https://www.qt.io/download).
