@@ -12,7 +12,7 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     SendFileButton = new QPushButton("发送文件");
     ReceiveAsTextButton = new QPushButton("接收为文本");
     ReceiveAsFileButton = new QPushButton("接收为文件");
-    RefreshSerialListButton = new QPushButton("刷新");
+    RefreshSerialListButton = new QPushButton("刷新串口列表");
     BaudRateList = new QComboBox();
     SerialPortList = new QComboBox();
     EstablishConnectionButton = new QPushButton("打开串口");
@@ -25,9 +25,9 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
 
     LeftLayout->addWidget(new QLabel("接收区"));
     LeftLayout->addWidget(DataReceivedTextBox);
-    LeftLayout->addLayout(ReceiveControlLayout);
     LeftLayout->addWidget(ReceiveAsFileButton);
     LeftLayout->addWidget(ReceiveAsTextButton);
+    LeftLayout->addLayout(ReceiveControlLayout);
 
     SendControlLayout->addWidget(SendDataButton);
 
@@ -36,10 +36,10 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     MiddleLayout->addLayout(SendControlLayout);
 
     RightLayout->addWidget(RefreshSerialListButton);
-    RightLayout->addWidget(new QLabel("波特率"));
     RightLayout->addWidget(BaudRateList);
-    RightLayout->addWidget(new QLabel("串口选择"));
+    RightLayout->addWidget(new QLabel("波特率"));
     RightLayout->addWidget(SerialPortList);
+    RightLayout->addWidget(new QLabel("串口选择"));
     RightLayout->addWidget(EstablishConnectionButton);
     RightLayout->addWidget(TerminateConnectionButton);
     RightLayout->addWidget(SendFileButton);

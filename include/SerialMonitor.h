@@ -1,3 +1,13 @@
+/**
+ * @file    SerialMonitor.h
+ * @brief   This class is all about the user interface
+ * @note    This class is nothing but some widgets,
+ *          including buttons, textedit, combobox, etc.
+ *          this class is NOT responsible for any relation between UI
+ *          and SerialConnection, which is MainWindow's job.
+ */
+
+
 #ifndef UIWINDOW_H
 #define UIWINDOW_H
 

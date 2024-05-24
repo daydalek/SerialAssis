@@ -20,7 +20,7 @@ find_package(Qt6 COMPONENTS
         Test
         REQUIRED)
 
-add_executable(SerialAssis src/main.cpp
+add_executable(SerialAssis WIN32 src/main.cpp
         src/SerialConnection.cpp
         include/SerialConnection.h
         src/MainWindow.cpp

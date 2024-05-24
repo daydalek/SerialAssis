@@ -1,3 +1,11 @@
+/**
+ * @file    SerialConnection.h
+ * @brief   This class is responsible for the serial connection
+ * @note    This class is a wrapper of QSerialPort,including sending data, sending file, receiving data,
+ *          also there's a Errorcode class named SerialConnectionState ,which can be passed to MainWindow to
+ *          do some specific operations,such as pop up a window to warn users that serialport is not opened.
+ */
+
 #ifndef SERIAL_CONNECTION_H
 #define SERIAL_CONNECTION_H
 #include <QSerialPort>
