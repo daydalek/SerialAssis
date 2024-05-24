@@ -1,0 +1,70 @@
+\doxysection{src/include/\+Serial\+Connection.h File Reference}
+\hypertarget{_serial_connection_8h}{}\label{_serial_connection_8h}\index{src/include/SerialConnection.h@{src/include/SerialConnection.h}}
+
+
+This class is responsible for the serial connection.  
+
+
+{\ttfamily \#include $<$QSerial\+Port$>$}\newline
+{\ttfamily \#include $<$QObject$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_serial_connection}{Serial\+Connection}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}} \{ \newline
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a2767828026039e8ba7b38973cbb701f2}{File\+Not\+Found}}
+, \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a646be16f0222207c6f871f8cd1b50637}{File\+Read\+Error}}
+, \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a9dbed09a2451c11b614181761b67e70f}{Last\+Serial\+Operation\+Not\+Completed}}
+, \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a70a47cae4eb221930f2663fd244369ea}{No\+Error}}
+, \newline
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a36d55b04a522885e48bc66ccf1ca5c46}{Nothing\+To\+Be\+Readed}}
+, \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a73b770c6f04462b106bbada34b8ee4ba}{Serial\+Port\+Not\+Opened}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is responsible for the serial connection. 
+
+\begin{DoxyNote}{Note}
+This class is a wrapper of QSerial\+Port,including sending data, sending file, receiving data, also there\textquotesingle{}s a Errorcode class named Serial\+Connection\+State ,which can be passed to \doxylink{class_main_window}{Main\+Window} to do some specific operations,such as pop up a window to warn users that serialport is not opened. 
+\end{DoxyNote}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}\index{SerialConnection.h@{SerialConnection.h}!SerialConnectionState@{SerialConnectionState}}
+\index{SerialConnectionState@{SerialConnectionState}!SerialConnection.h@{SerialConnection.h}}
+\doxysubsubsection{\texorpdfstring{SerialConnectionState}{SerialConnectionState}}
+{\footnotesize\ttfamily \label{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8} 
+enum class \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FileNotFound@{FileNotFound}!SerialConnection.h@{SerialConnection.h}}\index{SerialConnection.h@{SerialConnection.h}!FileNotFound@{FileNotFound}}}\Hypertarget{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a2767828026039e8ba7b38973cbb701f2}\label{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8} 
+File\+Not\+Found&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{FileReadError@{FileReadError}!SerialConnection.h@{SerialConnection.h}}\index{SerialConnection.h@{SerialConnection.h}!FileReadError@{FileReadError}}}\Hypertarget{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a646be16f0222207c6f871f8cd1b50637}\label{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8} 
+File\+Read\+Error&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LastSerialOperationNotCompleted@{LastSerialOperationNotCompleted}!SerialConnection.h@{SerialConnection.h}}\index{SerialConnection.h@{SerialConnection.h}!LastSerialOperationNotCompleted@{LastSerialOperationNotCompleted}}}\Hypertarget{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a9dbed09a2451c11b614181761b67e70f}\label{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8} 
+Last\+Serial\+Operation\+Not\+Completed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NoError@{NoError}!SerialConnection.h@{SerialConnection.h}}\index{SerialConnection.h@{SerialConnection.h}!NoError@{NoError}}}\Hypertarget{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a70a47cae4eb221930f2663fd244369ea}\label{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8} 
+No\+Error&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NothingToBeReaded@{NothingToBeReaded}!SerialConnection.h@{SerialConnection.h}}\index{SerialConnection.h@{SerialConnection.h}!NothingToBeReaded@{NothingToBeReaded}}}\Hypertarget{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a36d55b04a522885e48bc66ccf1ca5c46}\label{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8} 
+Nothing\+To\+Be\+Readed&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SerialPortNotOpened@{SerialPortNotOpened}!SerialConnection.h@{SerialConnection.h}}\index{SerialConnection.h@{SerialConnection.h}!SerialPortNotOpened@{SerialPortNotOpened}}}\Hypertarget{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a73b770c6f04462b106bbada34b8ee4ba}\label{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8} 
+Serial\+Port\+Not\+Opened&\\
+\hline
+
+\end{DoxyEnumFields}

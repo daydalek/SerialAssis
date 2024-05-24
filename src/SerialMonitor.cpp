@@ -1,4 +1,4 @@
-#include "../include/SerialMonitor.h"
+#include "include/SerialMonitor.h"
 
 SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     MainLayout = new QHBoxLayout(this);

@@ -1,6 +1,12 @@
-
-#include "../include/MainWindow.h"
-#include "../include/SerialConnection.h"
+/**
+* @file     MainWindow.cpp
+* @brief    Implementations of MainWindow.h
+* @note     This file is about the integration of UI and SerialConnection,
+            which means when you click a button,the SerialConnection or the UI
+            will react to the event.
+*/
+#include "include/MainWindow.h"
+#include "include/SerialConnection.h"
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSerialPortInfo>
@@ -22,9 +28,9 @@ MainWindow::~MainWindow() {
 }
 
 /**
- * @note    get all available serial ports and insert them into SerialPortModel
- *          this function is powered by QSerialPortInfo::availablePorts()
- *          called when RefreshSerialListButton is clicked
+ * @note    get all available serial ports and insert them into SerialPortModel.
+ *          This function is powered by QSerialPortInfo::availablePorts().
+ *          It's called when RefreshSerialListButton is clicked
  */
 
 void MainWindow::getAvaliableSerialPorts() {
@@ -105,7 +111,7 @@ void MainWindow::createConnection() {
 /**
  * @note    TerminalConnection when StopConnectionButton is clicked by calling SerialConnection::CloseConnection()
  *          Error Code SerialConnectionState::LastSerialConnectionNotCompleted is used to
- *          show warning MessageBox when close operation failed
+ *          show warning MessageBox.
  */
 
 void MainWindow::terminateConnection() {
@@ -126,7 +132,7 @@ void MainWindow::terminateConnection() {
 }
 
 /**
- * @note    send text in TextEdit widget ( DataToSend ) by calling SerialConnection::WriteString()
+ * @note    send text in TextEdit widget ( DataToSend ) by calling SerialConnection::writeData()
  *          Possible Error Code : SerialConnection::SerialPortNotOpened
  */
 
@@ -148,7 +154,7 @@ void MainWindow::sendText() {
 
 /**
  * @note    send file by calling SerialConnection::writeData()
- *          Possible Error Code : SerialConnection::SerialPortNotOpened
+ *          possible Error code : SerialConnection::SerialPortNotOpened
  */
 void MainWindow::sendFile() {
     QString FileName = QFileDialog::getOpenFileName(this, "Open File", QDir::currentPath());
@@ -166,8 +172,9 @@ void MainWindow::sendFile() {
 }
 
 /**
- * @note    receive data from another device by calling SerialConnection::ReadString()
- *          Possible Error Code : SerialConnection::NothingToBeReaded
+ * @note    receive data from another device by calling SerialConnection::readData()
+            called when ReceiveAsTextButton is clicked
+ *          possible Error code : SerialConnection::NothingToBeReaded
  */
 
 void MainWindow::receiveText() {
@@ -184,6 +191,11 @@ void MainWindow::receiveText() {
     UI->DataReceivedTextBox->moveCursor(QTextCursor::End);
     UI->DataReceivedTextBox->insertPlainText(QString::fromUtf8(TextDataFromSerialPort));
 }
+
+/**
+* @note     receive data from another device by calling SerialConnection::readData
+            called when ReceiveAsFileButton is clicked
+*/
 
 void MainWindow::receiveFile() {
     if (this->UiHandledSerialConnection == nullptr) {

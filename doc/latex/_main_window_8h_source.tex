@@ -1,0 +1,47 @@
+\doxysection{Main\+Window.\+h}
+\hypertarget{_main_window_8h_source}{}\label{_main_window_8h_source}\index{src/include/MainWindow.h@{src/include/MainWindow.h}}
+\mbox{\hyperlink{_main_window_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ MAINWINDOW\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ MAINWINDOW\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_serial_connection_8h}{SerialConnection.h}}"{}}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_serial_monitor_8h}{SerialMonitor.h}}"{}}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QMainWindow>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QStandardItemModel>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_main_window}{MainWindow}}\ :\ \textcolor{keyword}{public}\ QMainWindow\ \{}
+\DoxyCodeLine{00021\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_main_window_a996c5a2b6f77944776856f08ec30858d}{MainWindow}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00025\ \ \ \ \ \mbox{\hyperlink{class_main_window_a1f7d2c56410fc1bfa135bb907d43313f}{\string~MainWindow}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_serial_monitor}{SerialMonitor}}\ *UI\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_serial_connection}{SerialConnection}}\ *UiHandledSerialConnection\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00030\ \ \ \ \ QStandardItemModel\ *SerialPortModel\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00031\ \ \ \ \ QStandardItemModel\ *BaudRateModel\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00032\ \ \ \ \ std::vector<QSerialPort::BaudRate>\ BaudRateList\ =\ \{QSerialPort::Baud9600,\ QSerialPort::Baud19200,}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QSerialPort::Baud38400,\ QSerialPort::Baud57600,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QSerialPort::Baud115200\};}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keywordtype}{void}\ connectSlots();}
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ createConnection();}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ terminateConnection();}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keywordtype}{void}\ sendText();}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}\ sendFile();}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{void}\ receiveText();}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ receiveFile();}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ initBaudRate();}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keywordtype}{void}\ clearAll();}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{void}\ getAvaliableSerialPorts();}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordtype}{void}\ dataWrittenHint();}
+\DoxyCodeLine{00048\ \};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MAINWINDOW\_H}}
+
+\end{DoxyCode}

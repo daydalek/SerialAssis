@@ -1,0 +1,25 @@
+\doxysection{src/include/\+Main\+Window.h File Reference}
+\hypertarget{_main_window_8h}{}\label{_main_window_8h}\index{src/include/MainWindow.h@{src/include/MainWindow.h}}
+
+
+This class is responsible for connecting the UI and the serial connection together.  
+
+
+{\ttfamily \#include "{}Serial\+Connection.\+h"{}}\newline
+{\ttfamily \#include "{}Serial\+Monitor.\+h"{}}\newline
+{\ttfamily \#include $<$QMain\+Window$>$}\newline
+{\ttfamily \#include $<$QStandard\+Item\+Model$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_main_window}{Main\+Window}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class is responsible for connecting the UI and the serial connection together. 
+
+\begin{DoxyNote}{Note}
+including call the functions in \doxylink{class_serial_connection}{Serial\+Connection} when buttons are clicked, insert Baud\+Rate into Baud\+Rate\+List, pdate Serial\+Port\+List constantly, and show the data received from serial port in the Text\+Edit widget, or save it as file. 
+\end{DoxyNote}

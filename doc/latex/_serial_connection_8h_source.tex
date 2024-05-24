@@ -1,0 +1,45 @@
+\doxysection{Serial\+Connection.\+h}
+\hypertarget{_serial_connection_8h_source}{}\label{_serial_connection_8h_source}\index{src/include/SerialConnection.h@{src/include/SerialConnection.h}}
+\mbox{\hyperlink{_serial_connection_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#ifndef\ SERIAL\_CONNECTION\_H}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ SERIAL\_CONNECTION\_H}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QSerialPort>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{SerialConnectionState}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a2767828026039e8ba7b38973cbb701f2}{FileNotFound}},}
+\DoxyCodeLine{00016\ \ \ \ \ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a646be16f0222207c6f871f8cd1b50637}{FileReadError}},}
+\DoxyCodeLine{00017\ \ \ \ \ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a9dbed09a2451c11b614181761b67e70f}{LastSerialOperationNotCompleted}},}
+\DoxyCodeLine{00018\ \ \ \ \ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a70a47cae4eb221930f2663fd244369ea}{NoError}},}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a36d55b04a522885e48bc66ccf1ca5c46}{NothingToBeReaded}},}
+\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8a73b770c6f04462b106bbada34b8ee4ba}{SerialPortNotOpened}}}
+\DoxyCodeLine{00021\ \};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_serial_connection}{SerialConnection}}\ :\ \textcolor{keyword}{public}\ QObject\{}
+\DoxyCodeLine{00024\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_serial_connection_a78b7ae6bdc497955c1739984b76297ef}{SerialConnection}}(\textcolor{keyword}{const}\ QString\&\ SerialPortName,\ QSerialPort::BaudRate\ BaudRate=QSerialPort::Baud9600);}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_serial_connection_af2710ae66364103a9c88b5a6eda9233b}{\string~SerialConnection}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{SerialConnectionState}}\ \mbox{\hyperlink{class_serial_connection_ac3549abb53fa286326aad76fd9fad235}{writeData}}(\textcolor{keyword}{const}\ QByteArray\ \&data)\ \ \ \ \ \ \ \textcolor{keyword}{const};}
+\DoxyCodeLine{00030\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{SerialConnectionState}}\ \mbox{\hyperlink{class_serial_connection_a92dcd387c52dcf9ce46aecdc5370a1d3}{writeFile}}(\textcolor{keyword}{const}\ QString\&\ NewFileName)\ \ \ \textcolor{keyword}{const};}
+\DoxyCodeLine{00031\ \ \ \ \ [[nodiscard]]\ \mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{SerialConnectionState}}\ \mbox{\hyperlink{class_serial_connection_a5e967b26b75643ffdbb0d03a87c1f87a}{closeConnection}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ [[nodiscard]]\ QByteArray\ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{class_serial_connection_abca5d3d9910d6927211b453c792c8ba4}{readData}}()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ signals:}
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_serial_connection_abf130fb87d351daf1000336d896e7239}{dataWritten}}();}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_serial_connection_ac577bae159d332fbc284d806189c9d2f}{dataReceived}}();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00039\ \ \ \ \ QSerialPort\ \ \ \ \ \ \ \ \ \ \ \ \ *SerialPort\{\};}
+\DoxyCodeLine{00040\ \ \ \ \ QSerialPort::BaudRate\ \ \ CurrentConnectedSerialPortBaudRate;}
+\DoxyCodeLine{00041\ \ \ \ \ QString\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ CurrentConnectedSerialPortName;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{keyword}{private}\ slots:}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordtype}{void}\ onBytesWritten();}
+\DoxyCodeLine{00045\ \};}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//SERIAL\_CONNECTION\_H}}
+
+\end{DoxyCode}

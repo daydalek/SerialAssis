@@ -22,10 +22,10 @@ find_package(Qt6 COMPONENTS
 
 add_executable(SerialAssis WIN32 src/main.cpp
         src/SerialConnection.cpp
-        include/SerialConnection.h
+        src/include/SerialConnection.h
         src/MainWindow.cpp
-        include/MainWindow.h
-        include/SerialMonitor.h
+        src/include/MainWindow.h
+        src/include/SerialMonitor.h
         src/SerialMonitor.cpp
 )
 target_link_libraries(SerialAssis

@@ -1,4 +1,4 @@
-#include "../include/SerialConnection.h"
+#include "include/SerialConnection.h"
 
 #include <QFile>
 #include <QMessageBox>
@@ -42,6 +42,10 @@ SerialConnectionState SerialConnection::writeData(const QByteArray &DataToWrite)
     return SerialConnectionState::NoError;
 }
 
+/**
+* @param    NameOfFileToWrite is the filename of the file to send.
+* @return   The error code of the operation,used to show warning MessageBox when write operation failed
+*/
 SerialConnectionState SerialConnection::writeFile(const QString &NameOfFileToWrite) const {
     QFile file(NameOfFileToWrite);
     if (!file.open(QIODevice::ReadOnly)) {

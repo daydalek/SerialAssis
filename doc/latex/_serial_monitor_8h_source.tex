@@ -1,0 +1,50 @@
+\doxysection{Serial\+Monitor.\+h}
+\hypertarget{_serial_monitor_8h_source}{}\label{_serial_monitor_8h_source}\index{src/include/SerialMonitor.h@{src/include/SerialMonitor.h}}
+\mbox{\hyperlink{_serial_monitor_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#ifndef\ UIWINDOW\_H}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ UIWINDOW\_H}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <QApplication>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <QCheckBox>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <QComboBox>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QDateTime>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QGridLayout>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QHBoxLayout>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <QLabel>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QPushButton>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <QTextEdit>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <QTimer>}}
+\DoxyCodeLine{00024\ \textcolor{preprocessor}{\#include\ <QVBoxLayout>}}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <QWidget>}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_serial_monitor}{SerialMonitor}}\ :\ \textcolor{keyword}{public}\ QWidget\ \{}
+\DoxyCodeLine{00028\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{class_serial_monitor_a0518a263502e2ff3c7742dc62819ce6a}{SerialMonitor}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ QHBoxLayout\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_aaf62efd25c7ce02b366967d05eff4944}{MainLayout}};}
+\DoxyCodeLine{00033\ \ \ \ \ QVBoxLayout\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_aef883d77f2dddf9f1b598d1f3c62683f}{LeftLayout}};}
+\DoxyCodeLine{00034\ \ \ \ \ QVBoxLayout\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_a1f5b50b6b0c8847c9b30b7324d07f30a}{MiddleLayout}};}
+\DoxyCodeLine{00035\ \ \ \ \ QVBoxLayout\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_ab522f347ecce7067ed167256eadd1a3d}{RightLayout}};}
+\DoxyCodeLine{00036\ \ \ \ \ QHBoxLayout\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_ab294a2f1bfdd0c58e7f5c903a55c7d74}{ReceiveControlLayout}};}
+\DoxyCodeLine{00037\ \ \ \ \ QHBoxLayout\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_a979c3319c9aca4d040c0fabcc57c2694}{SendControlLayout}};}
+\DoxyCodeLine{00038\ \ \ \ \ QTextEdit\ \ \ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_a323542f7ed3fd7cbd75d9bf714d54bc3}{DataToSendTextBox}};}
+\DoxyCodeLine{00039\ \ \ \ \ QTextEdit\ \ \ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_abb5cc4547d61869140ba82e3ccc24fbf}{DataReceivedTextBox}};}
+\DoxyCodeLine{00040\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_a05f89ae0a817122d8773cc56b05fb4d2}{ClearButton}};}
+\DoxyCodeLine{00041\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_ae6914da585428bb84e96e7980dce2c9a}{SendDataButton}};}
+\DoxyCodeLine{00042\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_ad75a34b0c5d3b2ac338a5958a94f5ef5}{SendFileButton}};}
+\DoxyCodeLine{00043\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_a3498b813d9dbe6398c603f76bbba9e5f}{RefreshSerialListButton}};}
+\DoxyCodeLine{00044\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_ad6de141de610e3b91143b225e7bc97ca}{EstablishConnectionButton}};}
+\DoxyCodeLine{00045\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_a566528e92b76c756847a83e9f5038f3d}{TerminateConnectionButton}};}
+\DoxyCodeLine{00046\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_abd6c763cc22d16397d694d4fae62c1f5}{ReceiveAsTextButton}};}
+\DoxyCodeLine{00047\ \ \ \ \ QPushButton\ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_adc1e654f19c230146df18a1d94491871}{ReceiveAsFileButton}};}
+\DoxyCodeLine{00048\ \ \ \ \ QComboBox\ \ \ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_aced8c2212704c37ce3456a2a5416b929}{BaudRateList}};}
+\DoxyCodeLine{00049\ \ \ \ \ QComboBox\ \ \ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_ad8d4d60b2c2ed0f407fc51d3bec9bc8e}{SerialPortList}};}
+\DoxyCodeLine{00050\ \ \ \ \ QLabel\ \ \ \ \ \ \ \ \ \ *\mbox{\hyperlink{class_serial_monitor_a41a071c7ba5c5a019fd861f4f9503fa5}{DateTimeLabel}};}
+\DoxyCodeLine{00051\ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ UIWINDOW\_H}}
+
+\end{DoxyCode}

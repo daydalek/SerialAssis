@@ -1,0 +1,126 @@
+\doxysection{Serial\+Connection Class Reference}
+\hypertarget{class_serial_connection}{}\label{class_serial_connection}\index{SerialConnection@{SerialConnection}}
+
+
+{\ttfamily \#include $<$Serial\+Connection.\+h$>$}
+
+Inheritance diagram for Serial\+Connection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_serial_connection}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_serial_connection_abf130fb87d351daf1000336d896e7239}{data\+Written}} ()
+\item 
+void \mbox{\hyperlink{class_serial_connection_ac577bae159d332fbc284d806189c9d2f}{data\+Received}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_serial_connection_a78b7ae6bdc497955c1739984b76297ef}{Serial\+Connection}} (const QString \&Serial\+Port\+Name, QSerial\+Port\+::\+Baud\+Rate Baud\+Rate=QSerial\+Port\+::\+Baud9600)
+\item 
+\mbox{\hyperlink{class_serial_connection_af2710ae66364103a9c88b5a6eda9233b}{\texorpdfstring{$\sim$}{\string~}\+Serial\+Connection}} () override
+\item 
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}} \mbox{\hyperlink{class_serial_connection_ac3549abb53fa286326aad76fd9fad235}{write\+Data}} (const QByte\+Array \&data) const
+\item 
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}} \mbox{\hyperlink{class_serial_connection_a92dcd387c52dcf9ce46aecdc5370a1d3}{write\+File}} (const QString \&New\+File\+Name) const
+\item 
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}} \mbox{\hyperlink{class_serial_connection_a5e967b26b75643ffdbb0d03a87c1f87a}{close\+Connection}} () const
+\item 
+QByte\+Array \mbox{\hyperlink{class_serial_connection_abca5d3d9910d6927211b453c792c8ba4}{read\+Data}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_serial_connection_a78b7ae6bdc497955c1739984b76297ef}\index{SerialConnection@{SerialConnection}!SerialConnection@{SerialConnection}}
+\index{SerialConnection@{SerialConnection}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{SerialConnection()}{SerialConnection()}}
+{\footnotesize\ttfamily \label{class_serial_connection_a78b7ae6bdc497955c1739984b76297ef} 
+Serial\+Connection\+::\+Serial\+Connection (\begin{DoxyParamCaption}\item[{const QString \&}]{Serial\+Port\+Name}{, }\item[{QSerial\+Port\+::\+Baud\+Rate}]{Baud\+Rate}{ = {\ttfamily QSerialPort\+:\+:Baud9600}}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em Serial\+Port\+Name} & the name of the serial port to open, which is shown in the Combo\+Box widget in user interface and chosed by the user. \\
+\hline
+{\em Baud\+Rate} & as the baudrate for the serial connection , chosed by the user in user interface , default at 9600 \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a \doxylink{class_serial_connection}{Serial\+Connection} object 
+\end{DoxyReturn}
+\Hypertarget{class_serial_connection_af2710ae66364103a9c88b5a6eda9233b}\index{SerialConnection@{SerialConnection}!````~SerialConnection@{\texorpdfstring{$\sim$}{\string~}SerialConnection}}
+\index{````~SerialConnection@{\texorpdfstring{$\sim$}{\string~}SerialConnection}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SerialConnection()}{\string~SerialConnection()}}
+{\footnotesize\ttfamily \label{class_serial_connection_af2710ae66364103a9c88b5a6eda9233b} 
+Serial\+Connection\+::\texorpdfstring{$\sim$}{\string~}\+Serial\+Connection (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_serial_connection_a5e967b26b75643ffdbb0d03a87c1f87a}\index{SerialConnection@{SerialConnection}!closeConnection@{closeConnection}}
+\index{closeConnection@{closeConnection}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{closeConnection()}{closeConnection()}}
+{\footnotesize\ttfamily \label{class_serial_connection_a5e967b26b75643ffdbb0d03a87c1f87a} 
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}} Serial\+Connection\+::close\+Connection (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+\begin{DoxyReturn}{Returns}
+the Error Code. Serial\+Port is closed only when last operation is finished(which is nothing to read and nothing to write) 
+\end{DoxyReturn}
+\Hypertarget{class_serial_connection_ac577bae159d332fbc284d806189c9d2f}\index{SerialConnection@{SerialConnection}!dataReceived@{dataReceived}}
+\index{dataReceived@{dataReceived}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{dataReceived}{dataReceived}}
+{\footnotesize\ttfamily \label{class_serial_connection_ac577bae159d332fbc284d806189c9d2f} 
+void Serial\+Connection\+::data\+Received (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\Hypertarget{class_serial_connection_abf130fb87d351daf1000336d896e7239}\index{SerialConnection@{SerialConnection}!dataWritten@{dataWritten}}
+\index{dataWritten@{dataWritten}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{dataWritten}{dataWritten}}
+{\footnotesize\ttfamily \label{class_serial_connection_abf130fb87d351daf1000336d896e7239} 
+void Serial\+Connection\+::data\+Written (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+\Hypertarget{class_serial_connection_abca5d3d9910d6927211b453c792c8ba4}\index{SerialConnection@{SerialConnection}!readData@{readData}}
+\index{readData@{readData}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{readData()}{readData()}}
+{\footnotesize\ttfamily \label{class_serial_connection_abca5d3d9910d6927211b453c792c8ba4} 
+QByte\+Array Serial\+Connection\+::read\+Data (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+\begin{DoxyReturn}{Returns}
+data readed from serialport. these data will be passed to \doxylink{class_main_window}{Main\+Window},user is responsible to deside whether to save it as file or show in the Text\+Edit widget. 
+\end{DoxyReturn}
+\Hypertarget{class_serial_connection_ac3549abb53fa286326aad76fd9fad235}\index{SerialConnection@{SerialConnection}!writeData@{writeData}}
+\index{writeData@{writeData}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{writeData()}{writeData()}}
+{\footnotesize\ttfamily \label{class_serial_connection_ac3549abb53fa286326aad76fd9fad235} 
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}} Serial\+Connection\+::write\+Data (\begin{DoxyParamCaption}\item[{const QByte\+Array \&}]{Data\+To\+Write}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em Data\+To\+Write} & as the data to be written, which is inputted in the Text\+Edit widget in user interface \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the Error Code of the operation,used to show warning Message\+Box when write operation failed 
+\end{DoxyReturn}
+\Hypertarget{class_serial_connection_a92dcd387c52dcf9ce46aecdc5370a1d3}\index{SerialConnection@{SerialConnection}!writeFile@{writeFile}}
+\index{writeFile@{writeFile}!SerialConnection@{SerialConnection}}
+\doxysubsubsection{\texorpdfstring{writeFile()}{writeFile()}}
+{\footnotesize\ttfamily \label{class_serial_connection_a92dcd387c52dcf9ce46aecdc5370a1d3} 
+\mbox{\hyperlink{_serial_connection_8h_a7272f51a735a22c981810d4103626ea8}{Serial\+Connection\+State}} Serial\+Connection\+::write\+File (\begin{DoxyParamCaption}\item[{const QString \&}]{Name\+Of\+File\+To\+Write}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [nodiscard]}}
+
+
+\begin{DoxyParams}{Parameters}
+{\em Name\+Of\+File\+To\+Write} & is the filename of the file to send. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The error code of the operation,used to show warning Message\+Box when write operation failed 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/include/\mbox{\hyperlink{_serial_connection_8h}{Serial\+Connection.\+h}}\item 
+src/\mbox{\hyperlink{_serial_connection_8cpp}{Serial\+Connection.\+cpp}}\end{DoxyCompactItemize}
