@@ -10,6 +10,8 @@
 #define SERIAL_CONNECTION_H
 #include <QSerialPort>
 #include <QObject>
+#include <QFile>
+#include <QMessageBox>
 
 enum class SerialConnectionState {
     FileNotFound,
@@ -36,7 +38,7 @@ public:
     void dataReceived();
 
 private:
-    QSerialPort             *SerialPort{};
+    QSerialPort             *SerialPort = nullptr;
     QSerialPort::BaudRate   CurrentConnectedSerialPortBaudRate;
     QString                 CurrentConnectedSerialPortName;
 

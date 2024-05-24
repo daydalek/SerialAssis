@@ -1,16 +1,12 @@
 cmake_minimum_required(VERSION 3.26)
 project(SerialAssis)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_PREFIX_PATH "C:\\Qt\\6.6.3\\mingw_64\\lib\\cmake")
-
-if(MSVC)
-  add_compile_options(/Zc:__cplusplus) # enable __cplusplus macro for MSVC because QT6 need C++17 or later
-endif()
+set(CMAKE_PREFIX_PATH "C:\\Qt\\6.6.3\\mingw_64\\lib\\cmake;C:\\Users\\daydalek\\.vcpkg-clion\\vcpkg\\packages")
 
 find_package(Qt6 COMPONENTS
         Core
@@ -20,19 +16,24 @@ find_package(Qt6 COMPONENTS
         Test
         REQUIRED)
 
-add_executable(SerialAssis WIN32 src/main.cpp
-        src/SerialConnection.cpp
-        src/include/SerialConnection.h
-        src/MainWindow.cpp
-        src/include/MainWindow.h
-        src/include/SerialMonitor.h
-        src/SerialMonitor.cpp
+find_package(Catch2)
+find_package(simdjson)
+
+file(GLOB_RECURSE SOURCES
+        "src/*.cpp"
+        "src/include/*.h"
 )
+
+add_executable(SerialAssis ${SOURCES})
+
 target_link_libraries(SerialAssis
         Qt::Core
         Qt::Gui
         Qt::Widgets
         Qt::SerialPort
+        Catch2::Catch2
+        Catch2::Catch2WithMain
+        simdjson::simdjson
 )
 
 if (WIN32 AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)

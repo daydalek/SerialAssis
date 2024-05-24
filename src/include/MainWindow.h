@@ -15,7 +15,12 @@
 #include "SerialMonitor.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QSerialPortInfo>
+#include <QStandardItemModel>
 #include <vector>
+
 
 class MainWindow : public QMainWindow {
     Q_OBJECT

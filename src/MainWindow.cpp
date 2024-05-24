@@ -5,13 +5,9 @@
             which means when you click a button,the SerialConnection or the UI
             will react to the event.
 */
+
 #include "include/MainWindow.h"
 #include "include/SerialConnection.h"
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QSerialPortInfo>
-#include <QStandardItemModel>
-#include <QTimer>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), UI(new SerialMonitor) {
     setCentralWidget(UI);
@@ -142,8 +138,8 @@ void MainWindow::sendText() {
         return;
     }
     // assert(this->UiSerialConnection != nullptr);
-    auto ConnectionState = SerialConnectionState::NoError;
-    ConnectionState = this->UiHandledSerialConnection->writeData(UI->DataToSendTextBox->toPlainText().toUtf8());
+    SerialConnectionState ConnectionState =
+        this->UiHandledSerialConnection->writeData(UI->DataToSendTextBox->toPlainText().toUtf8());
     /*
      * Possible State:SerialConnectionState::SerialPortNotOpened
      */
@@ -213,7 +209,8 @@ void MainWindow::receiveFile() {
         return;
     }
     QDataStream out(&file);
-    out.writeRawData(FileDataFromSerialPort.data(), FileDataFromSerialPort.size());
+    /*pay attention , FileDataFromSerialPort cast from long long to int*/
+    out.writeRawData(FileDataFromSerialPort.data(), static_cast<int>(FileDataFromSerialPort.size()));
     file.close();
 }
 
