@@ -18,6 +18,8 @@
     - SerialConnection.h: SerialConnection头文件
     - SerialMonitor.h: SerialMonitor头文件，关注与连接无关的部分
 
+可以在[doc](doc/html/index.html)查看Doxygen自动抽取的文档。
+
 ### 构建指南
 你需要安装Qt6。你可以从Qt官方网站下载。[Qt official website](https://www.qt.io/download).
 
