@@ -1,0 +1,68 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Hierarchical Index}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Class Hierarchy}{1}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Class Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Class List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}File Index}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}File List}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Class Documentation}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Main\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Window Class Reference}{7}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}Constructor \& Destructor Documentation}{7}{subsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.1.1}MainWindow()}{7}{subsubsection.4.1.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.1.2}$\sim $MainWindow()}{7}{subsubsection.4.1.1.2}%
+\contentsline {section}{\numberline {4.2}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Connection Class Reference}{8}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Constructor \& Destructor Documentation}{8}{subsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.1.1}SerialConnection()}{8}{subsubsection.4.2.1.1}%
+\contentsline {subsubsection}{\numberline {4.2.1.2}$\sim $SerialConnection()}{8}{subsubsection.4.2.1.2}%
+\contentsline {subsection}{\numberline {4.2.2}Member Function Documentation}{9}{subsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}closeConnection()}{9}{subsubsection.4.2.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2.2}dataReceived}{9}{subsubsection.4.2.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.2.3}dataWritten}{9}{subsubsection.4.2.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.2.4}readData()}{9}{subsubsection.4.2.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.2.5}writeData()}{9}{subsubsection.4.2.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.2.6}writeFile()}{9}{subsubsection.4.2.2.6}%
+\contentsline {section}{\numberline {4.3}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Monitor Class Reference}{10}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Constructor \& Destructor Documentation}{11}{subsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.1.1}SerialMonitor()}{11}{subsubsection.4.3.1.1}%
+\contentsline {subsection}{\numberline {4.3.2}Member Data Documentation}{11}{subsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.1}BaudRateList}{11}{subsubsection.4.3.2.1}%
+\contentsline {subsubsection}{\numberline {4.3.2.2}ClearButton}{11}{subsubsection.4.3.2.2}%
+\contentsline {subsubsection}{\numberline {4.3.2.3}DataReceivedTextBox}{11}{subsubsection.4.3.2.3}%
+\contentsline {subsubsection}{\numberline {4.3.2.4}DataToSendTextBox}{11}{subsubsection.4.3.2.4}%
+\contentsline {subsubsection}{\numberline {4.3.2.5}DateTimeLabel}{11}{subsubsection.4.3.2.5}%
+\contentsline {subsubsection}{\numberline {4.3.2.6}EstablishConnectionButton}{11}{subsubsection.4.3.2.6}%
+\contentsline {subsubsection}{\numberline {4.3.2.7}LeftLayout}{11}{subsubsection.4.3.2.7}%
+\contentsline {subsubsection}{\numberline {4.3.2.8}MainLayout}{11}{subsubsection.4.3.2.8}%
+\contentsline {subsubsection}{\numberline {4.3.2.9}MiddleLayout}{12}{subsubsection.4.3.2.9}%
+\contentsline {subsubsection}{\numberline {4.3.2.10}ReceiveAsFileButton}{12}{subsubsection.4.3.2.10}%
+\contentsline {subsubsection}{\numberline {4.3.2.11}ReceiveAsTextButton}{12}{subsubsection.4.3.2.11}%
+\contentsline {subsubsection}{\numberline {4.3.2.12}ReceiveControlLayout}{12}{subsubsection.4.3.2.12}%
+\contentsline {subsubsection}{\numberline {4.3.2.13}RefreshSerialListButton}{12}{subsubsection.4.3.2.13}%
+\contentsline {subsubsection}{\numberline {4.3.2.14}RightLayout}{12}{subsubsection.4.3.2.14}%
+\contentsline {subsubsection}{\numberline {4.3.2.15}SendControlLayout}{12}{subsubsection.4.3.2.15}%
+\contentsline {subsubsection}{\numberline {4.3.2.16}SendDataButton}{12}{subsubsection.4.3.2.16}%
+\contentsline {subsubsection}{\numberline {4.3.2.17}SendFileButton}{12}{subsubsection.4.3.2.17}%
+\contentsline {subsubsection}{\numberline {4.3.2.18}SerialPortList}{12}{subsubsection.4.3.2.18}%
+\contentsline {subsubsection}{\numberline {4.3.2.19}TerminateConnectionButton}{12}{subsubsection.4.3.2.19}%
+\contentsline {chapter}{\numberline {5}File Documentation}{13}{chapter.5}%
+\contentsline {section}{\numberline {5.1}src/include/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Main\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Window.h File Reference}{13}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Detailed Description}{13}{subsection.5.1.1}%
+\contentsline {section}{\numberline {5.2}Main\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Window.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{14}{section.5.2}%
+\contentsline {section}{\numberline {5.3}src/include/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Connection.h File Reference}{14}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Detailed Description}{15}{subsection.5.3.1}%
+\contentsline {subsection}{\numberline {5.3.2}Enumeration Type Documentation}{15}{subsection.5.3.2}%
+\contentsline {subsubsection}{\numberline {5.3.2.1}SerialConnectionState}{15}{subsubsection.5.3.2.1}%
+\contentsline {section}{\numberline {5.4}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Connection.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{15}{section.5.4}%
+\contentsline {section}{\numberline {5.5}src/include/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Monitor.h File Reference}{16}{section.5.5}%
+\contentsline {subsection}{\numberline {5.5.1}Detailed Description}{16}{subsection.5.5.1}%
+\contentsline {section}{\numberline {5.6}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Monitor.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{16}{section.5.6}%
+\contentsline {section}{\numberline {5.7}src/main.cpp File Reference}{17}{section.5.7}%
+\contentsline {subsection}{\numberline {5.7.1}Function Documentation}{17}{subsection.5.7.1}%
+\contentsline {subsubsection}{\numberline {5.7.1.1}main()}{17}{subsubsection.5.7.1.1}%
+\contentsline {section}{\numberline {5.8}src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Main\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Window.cpp File Reference}{17}{section.5.8}%
+\contentsline {subsection}{\numberline {5.8.1}Detailed Description}{17}{subsection.5.8.1}%
+\contentsline {section}{\numberline {5.9}src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Connection.cpp File Reference}{18}{section.5.9}%
+\contentsline {subsection}{\numberline {5.9.1}Macro Definition Documentation}{18}{subsection.5.9.1}%
+\contentsline {subsubsection}{\numberline {5.9.1.1}SERIAL\_UNABLE\_TO\_WRITE}{18}{subsubsection.5.9.1.1}%
+\contentsline {section}{\numberline {5.10}src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Serial\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Monitor.cpp File Reference}{18}{section.5.10}%
+\contentsline {chapter}{Index}{19}{section*.15}%

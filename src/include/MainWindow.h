@@ -30,10 +30,10 @@ class MainWindow : public QMainWindow {
     ~MainWindow() override;
 
   private:
-    SerialMonitor *UI = nullptr;
-    SerialConnection *UiHandledSerialConnection = nullptr;
-    QStandardItemModel *SerialPortModel = nullptr;
-    QStandardItemModel *BaudRateModel = nullptr;
+    SerialMonitor                      *UI                            = nullptr;
+    SerialConnection                   *UiHandledSerialConnection     = nullptr;
+    QStandardItemModel                 *SerialPortModel               = nullptr;
+    QStandardItemModel                 *BaudRateModel                 = nullptr;
     std::vector<QSerialPort::BaudRate> BaudRateList = {QSerialPort::Baud9600, QSerialPort::Baud19200,
                                                        QSerialPort::Baud38400, QSerialPort::Baud57600,
                                                        QSerialPort::Baud115200};

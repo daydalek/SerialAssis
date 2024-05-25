@@ -1,0 +1,166 @@
+\begin{theindex}
+
+  \item {\texorpdfstring{$\sim$}{\string~}MainWindow}
+    \subitem {MainWindow}, \hyperpage{7}
+  \item {\texorpdfstring{$\sim$}{\string~}SerialConnection}
+    \subitem {SerialConnection}, \hyperpage{8}
+
+  \indexspace
+
+  \item {BaudRateList}
+    \subitem {SerialMonitor}, \hyperpage{11}
+
+  \indexspace
+
+  \item {ClearButton}
+    \subitem {SerialMonitor}, \hyperpage{11}
+  \item {closeConnection}
+    \subitem {SerialConnection}, \hyperpage{9}
+
+  \indexspace
+
+  \item {dataReceived}
+    \subitem {SerialConnection}, \hyperpage{9}
+  \item {DataReceivedTextBox}
+    \subitem {SerialMonitor}, \hyperpage{11}
+  \item {DataToSendTextBox}
+    \subitem {SerialMonitor}, \hyperpage{11}
+  \item {dataWritten}
+    \subitem {SerialConnection}, \hyperpage{9}
+  \item {DateTimeLabel}
+    \subitem {SerialMonitor}, \hyperpage{11}
+
+  \indexspace
+
+  \item {EstablishConnectionButton}
+    \subitem {SerialMonitor}, \hyperpage{11}
+
+  \indexspace
+
+  \item {FileNotFound}
+    \subitem {SerialConnection.h}, \hyperpage{15}
+  \item {FileReadError}
+    \subitem {SerialConnection.h}, \hyperpage{15}
+
+  \indexspace
+
+  \item {LastSerialOperationNotCompleted}
+    \subitem {SerialConnection.h}, \hyperpage{15}
+  \item {LeftLayout}
+    \subitem {SerialMonitor}, \hyperpage{11}
+
+  \indexspace
+
+  \item {main}
+    \subitem {main.cpp}, \hyperpage{17}
+  \item {main.cpp}
+    \subitem {main}, \hyperpage{17}
+  \item {MainLayout}
+    \subitem {SerialMonitor}, \hyperpage{11}
+  \item {MainWindow}, \hyperpage{7}
+    \subitem {\texorpdfstring{$\sim$}{\string~}MainWindow}, 
+		\hyperpage{7}
+    \subitem {MainWindow}, \hyperpage{7}
+  \item {MiddleLayout}
+    \subitem {SerialMonitor}, \hyperpage{11}
+
+  \indexspace
+
+  \item {NoError}
+    \subitem {SerialConnection.h}, \hyperpage{15}
+  \item {NothingToBeReaded}
+    \subitem {SerialConnection.h}, \hyperpage{15}
+
+  \indexspace
+
+  \item {readData}
+    \subitem {SerialConnection}, \hyperpage{9}
+  \item {ReceiveAsFileButton}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {ReceiveAsTextButton}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {ReceiveControlLayout}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {RefreshSerialListButton}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {RightLayout}
+    \subitem {SerialMonitor}, \hyperpage{12}
+
+  \indexspace
+
+  \item {SendControlLayout}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {SendDataButton}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {SendFileButton}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {SERIAL\_UNABLE\_TO\_WRITE}
+    \subitem {SerialConnection.cpp}, \hyperpage{18}
+  \item {SerialConnection}, \hyperpage{8}
+    \subitem {\texorpdfstring{$\sim$}{\string~}SerialConnection}, 
+		\hyperpage{8}
+    \subitem {closeConnection}, \hyperpage{9}
+    \subitem {dataReceived}, \hyperpage{9}
+    \subitem {dataWritten}, \hyperpage{9}
+    \subitem {readData}, \hyperpage{9}
+    \subitem {SerialConnection}, \hyperpage{8}
+    \subitem {writeData}, \hyperpage{9}
+    \subitem {writeFile}, \hyperpage{9}
+  \item {SerialConnection.cpp}
+    \subitem {SERIAL\_UNABLE\_TO\_WRITE}, \hyperpage{18}
+  \item {SerialConnection.h}
+    \subitem {FileNotFound}, \hyperpage{15}
+    \subitem {FileReadError}, \hyperpage{15}
+    \subitem {LastSerialOperationNotCompleted}, \hyperpage{15}
+    \subitem {NoError}, \hyperpage{15}
+    \subitem {NothingToBeReaded}, \hyperpage{15}
+    \subitem {SerialConnectionState}, \hyperpage{15}
+    \subitem {SerialPortNotOpened}, \hyperpage{15}
+  \item {SerialConnectionState}
+    \subitem {SerialConnection.h}, \hyperpage{15}
+  \item {SerialMonitor}, \hyperpage{10}
+    \subitem {BaudRateList}, \hyperpage{11}
+    \subitem {ClearButton}, \hyperpage{11}
+    \subitem {DataReceivedTextBox}, \hyperpage{11}
+    \subitem {DataToSendTextBox}, \hyperpage{11}
+    \subitem {DateTimeLabel}, \hyperpage{11}
+    \subitem {EstablishConnectionButton}, \hyperpage{11}
+    \subitem {LeftLayout}, \hyperpage{11}
+    \subitem {MainLayout}, \hyperpage{11}
+    \subitem {MiddleLayout}, \hyperpage{11}
+    \subitem {ReceiveAsFileButton}, \hyperpage{12}
+    \subitem {ReceiveAsTextButton}, \hyperpage{12}
+    \subitem {ReceiveControlLayout}, \hyperpage{12}
+    \subitem {RefreshSerialListButton}, \hyperpage{12}
+    \subitem {RightLayout}, \hyperpage{12}
+    \subitem {SendControlLayout}, \hyperpage{12}
+    \subitem {SendDataButton}, \hyperpage{12}
+    \subitem {SendFileButton}, \hyperpage{12}
+    \subitem {SerialMonitor}, \hyperpage{11}
+    \subitem {SerialPortList}, \hyperpage{12}
+    \subitem {TerminateConnectionButton}, \hyperpage{12}
+  \item {SerialPortList}
+    \subitem {SerialMonitor}, \hyperpage{12}
+  \item {SerialPortNotOpened}
+    \subitem {SerialConnection.h}, \hyperpage{15}
+  \item {src/include/MainWindow.h}, \hyperpage{13, 14}
+  \item {src/include/SerialConnection.h}, \hyperpage{14, 15}
+  \item {src/include/SerialMonitor.h}, \hyperpage{16}
+  \item {src/main.cpp}, \hyperpage{17}
+  \item {src/MainWindow.cpp}, \hyperpage{17}
+  \item {src/SerialConnection.cpp}, \hyperpage{18}
+  \item {src/SerialMonitor.cpp}, \hyperpage{18}
+
+  \indexspace
+
+  \item {TerminateConnectionButton}
+    \subitem {SerialMonitor}, \hyperpage{12}
+
+  \indexspace
+
+  \item {writeData}
+    \subitem {SerialConnection}, \hyperpage{9}
+  \item {writeFile}
+    \subitem {SerialConnection}, \hyperpage{9}
+
+\end{theindex}
