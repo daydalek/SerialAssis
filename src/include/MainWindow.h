@@ -49,7 +49,7 @@ class MainWindow : public QMainWindow {
     void initBaudRate();
     void clearAll();
     void getAvaliableSerialPorts();
-    void dataWrittenHint();
+    void showDataWrittenWindow();
 };
 
 #endif // MAINWINDOW_H

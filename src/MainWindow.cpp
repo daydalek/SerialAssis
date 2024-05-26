@@ -146,6 +146,7 @@ void MainWindow::sendText() {
     if (ConnectionState == SerialConnectionState::SerialPortNotOpened) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
     }
+    connect(this->UiHandledSerialConnection, &SerialConnection::dataFullyWritten, this, &MainWindow::showDataWrittenWindow);
 }
 
 /**
@@ -165,6 +166,7 @@ void MainWindow::sendFile() {
     if (ConnectionState == SerialConnectionState::SerialPortNotOpened) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
     }
+    connect(this->UiHandledSerialConnection, &SerialConnection::dataFullyWritten, this, &MainWindow::showDataWrittenWindow);
 }
 
 /**
@@ -223,6 +225,6 @@ void MainWindow::clearAll() {
     UI->DataReceivedTextBox->clear();
 }
 
-void MainWindow::dataWrittenHint() {
+void MainWindow::showDataWrittenWindow() {
     QMessageBox::information(this, "Data Written", "Data Written Successfully");
 }

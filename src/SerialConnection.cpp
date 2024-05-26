@@ -44,7 +44,7 @@ SerialConnectionState SerialConnection::writeData(const QByteArray &DataToWrite)
     if (SerialPort->write(DataToWrite) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
-    // connect(SerialPort, &QSerialPort::bytesWritten, this, &SerialConnection::onBytesWritten);
+    connect(SerialPort, &QSerialPort::bytesWritten, this, &SerialConnection::onBytesWritten);
     return SerialConnectionState::NoError;
 }
 
@@ -62,7 +62,7 @@ SerialConnectionState SerialConnection::writeFile(const QString &NameOfFileToWri
     if (SerialPort->write(data) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
-    // connect(SerialPort, &QSerialPort::bytesWritten, this, &SerialConnection::onBytesWritten);
+    connect(SerialPort, &QSerialPort::bytesWritten, this, &SerialConnection::onBytesWritten);
     return SerialConnectionState::NoError;
 }
 
@@ -96,5 +96,5 @@ SerialConnectionState SerialConnection::closeConnection() const {
 
 
 void SerialConnection::onBytesWritten() {
-    emit dataWritten();
+    emit dataFullyWritten();
 }

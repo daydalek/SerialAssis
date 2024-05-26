@@ -11,7 +11,6 @@
 #include <QSerialPort>
 #include <QObject>
 #include <QFile>
-#include <QMessageBox>
 
 enum class SerialConnectionState {
     FileNotFound,
@@ -34,8 +33,7 @@ public:
     [[nodiscard]] QByteArray            readData()                              const;
 
     signals:
-    void dataWritten();
-    void dataReceived();
+    void dataFullyWritten();
 
 private:
     QSerialPort             *SerialPort = nullptr;
