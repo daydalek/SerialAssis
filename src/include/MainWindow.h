@@ -37,6 +37,13 @@ class MainWindow : public QMainWindow {
     std::vector<QSerialPort::BaudRate> BaudRateList = {QSerialPort::Baud9600, QSerialPort::Baud19200,
                                                        QSerialPort::Baud38400, QSerialPort::Baud57600,
                                                        QSerialPort::Baud115200};
+    /**
+     * @note    due to unknown reason,the messagebox to inform user that sending completed is
+     *          shown multiple times,so I have to use this ugly way to prevent it from happening.
+     *          I'll find a way to fix it sooner or later.
+     */
+    bool                                CompletionBoxShown            = false;
+
 
   private slots:
     void connectSlots();

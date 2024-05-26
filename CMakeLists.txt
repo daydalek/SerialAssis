@@ -30,7 +30,7 @@ file(GLOB_RECURSE RELEASE_SOURCES
 #        "src/include/SerialConnection.h"
 #)
 #
-add_executable(SerialAssis ${RELEASE_SOURCES})
+add_executable(SerialAssis WIN32 ${RELEASE_SOURCES})
 #add_executable(TestSerialConnection ${TEST_SERIAL_CONNECTION_SOURCES})
 
 target_link_libraries(

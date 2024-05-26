@@ -1,12 +1,12 @@
 /**
-* @file     SerialConnection.cpp
-* @brief    Implementations of SerialConnection.h
-* @note     This file is about the serial connection operations,including two write operation
-*           and one read operation. There are two operation for writing because there are
-*           different stategies to write data or write file,while reading operation deal with
-*           all the data in the same way,whether to save it as file or show it in the TextEdit widget
-*           is decided in MainWindow by User clicking ReceiveAsFileButton or ReceiveAsTextButton.
-*/
+ * @file     SerialConnection.cpp
+ * @brief    Implementations of SerialConnection.h
+ * @note     This file is about the serial connection operations,including two write operation
+ *           and one read operation. There are two operation for writing because there are
+ *           different stategies to write data or write file,while reading operation deal with
+ *           all the data in the same way,whether to save it as file or show it in the TextEdit
+ *           widget is decided in MainWindow by User clicking ReceiveAsFileButton or ReceiveAsTextButton.
+ */
 #include "include/SerialConnection.h"
 
 #define SERIAL_UNABLE_TO_WRITE (-1)
@@ -14,8 +14,9 @@
 /**
  * @param SerialPortName    the name of the serial port to open, which is shown in the ComboBox widget
  *                          in user interface and chosed by the user.
- * @param BaudRate          as the baudrate for the serial connection , chosed by the user in user interface , default at 9600
- * @return                  a SerialConnection object
+ * @param BaudRate          as the baudrate for the serial connection , chosed by the user in user interface , default
+ *                          at 9600
+ * @return                  a SerialConnection object,handled by MainWindow
  */
 
 SerialConnection::SerialConnection(const QString &SerialPortName, QSerialPort::BaudRate BaudRate) {
@@ -35,8 +36,10 @@ SerialConnection::~SerialConnection() {
 }
 
 /**
- * @param   DataToWrite as the data to be written, which is inputted in the TextEdit widget in user interface
- * @return  the Error Code of the operation,used to show warning MessageBox when write operation failed
+ * @param   DataToWrite as the data to be written, which is inputted in the TextEdit
+ *          widget in user interface
+ * @return  the Error Code of the operation,used to show warning MessageBox when write
+ *          operation failed
  */
 
 SerialConnectionState SerialConnection::writeData(const QByteArray &DataToWrite) const {
@@ -49,9 +52,10 @@ SerialConnectionState SerialConnection::writeData(const QByteArray &DataToWrite)
 }
 
 /**
-* @param    NameOfFileToWrite is the filename of the file to send.
-* @return   The error code of the operation,used to show warning MessageBox when write operation failed
-*/
+ * @param   NameOfFileToWrite is the filename of the file to send.
+ * @return  The error code of the operation,used to show warning MessageBox when
+ *          write operation failed
+ */
 
 SerialConnectionState SerialConnection::writeFile(const QString &NameOfFileToWrite) const {
     QFile file(NameOfFileToWrite);
@@ -66,10 +70,10 @@ SerialConnectionState SerialConnection::writeFile(const QString &NameOfFileToWri
     return SerialConnectionState::NoError;
 }
 
-
 /**
- * @return  data readed from serialport. these data will be passed to MainWindow,user is responsible to deside
- *          whether to save it as file or show in the TextEdit widget.
+ * @return  data readed from serialport. these data will be passed to MainWindow
+ *          user is responsible to deside whether to save it as file or show in
+ *          the TextEdit widget.
  */
 
 QByteArray SerialConnection::readData() const {
@@ -82,7 +86,8 @@ QByteArray SerialConnection::readData() const {
 }
 
 /**
- * @return  the Error Code. SerialPort is closed only when last operation is finished(which is nothing to read and nothing to write)
+ * @return  the Error Code. SerialPort is closed only when last operation is finished
+ *          (which is nothing to read and nothing to write)
  */
 
 SerialConnectionState SerialConnection::closeConnection() const {
@@ -94,7 +99,7 @@ SerialConnectionState SerialConnection::closeConnection() const {
     return SerialConnectionState::LastSerialOperationNotCompleted;
 }
 
-
 void SerialConnection::onBytesWritten() {
-    emit dataFullyWritten();
+    if (SerialPort->bytesToWrite() == 0)
+        emit dataFullyWritten();
 }

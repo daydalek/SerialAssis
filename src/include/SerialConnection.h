@@ -12,6 +12,10 @@
 #include <QObject>
 #include <QFile>
 
+/**
+ *  @brief  SerialConnectionState is the error code class of SerialConnection ,
+ *          use to simplify the error handling in MainWindow
+ */
 enum class SerialConnectionState {
     FileNotFound,
     FileReadError,
@@ -24,7 +28,8 @@ enum class SerialConnectionState {
 class SerialConnection : public QObject{
     Q_OBJECT
 public:
-    explicit SerialConnection(const QString& SerialPortName, QSerialPort::BaudRate BaudRate=QSerialPort::Baud9600);
+    explicit SerialConnection(const QString& SerialPortName, \
+        QSerialPort::BaudRate BaudRate=QSerialPort::Baud9600);
             ~SerialConnection() override;
 
     [[nodiscard]] SerialConnectionState writeData(const QByteArray &data)       const;

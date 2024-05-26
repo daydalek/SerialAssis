@@ -58,6 +58,7 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
 
     auto *timer = new QTimer(this);
     connect(timer, &QTimer::timeout,
-            [this]() { DateTimeLabel->setText(QDateTime::currentDateTime().toString("yyyy-MM-dd HH:mm:ss")); });
+            [this]() { DateTimeLabel->setText(QDateTime::currentDateTime().\
+                toString("yyyy-MM-dd HH:mm:ss")); });
     timer->start(1000);
 }

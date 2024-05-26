@@ -9,7 +9,8 @@
 #include "include/MainWindow.h"
 #include "include/SerialConnection.h"
 
-MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), UI(new SerialMonitor) {
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent), UI(new SerialMonitor) {
     setCentralWidget(UI);
     connectSlots();
     this->SerialPortModel = new QStandardItemModel(this);
@@ -34,17 +35,12 @@ void MainWindow::getAvaliableSerialPorts() {
         return;
     }
     QList<QSerialPortInfo> SerialPorts = QSerialPortInfo::availablePorts();
-    // for(auto &SerialPort: SerialPorts){
-    // qDebug() << SerialPort.portName();
-    // }
     if (SerialPorts.empty()) {
-        // qDebug() << "No Serial Ports Found";
         return;
     }
     this->SerialPortModel->clear();
     for (const auto &SerialPort : SerialPorts) {
         auto *NewItem = new QStandardItem(SerialPort.portName());
-        // qDebug() << SerialPort.portName();
         this->SerialPortModel->appendRow(NewItem);
     }
     UI->SerialPortList->setModel(this->SerialPortModel);
@@ -55,13 +51,12 @@ void MainWindow::getAvaliableSerialPorts() {
  *          BaudRate:9600,19200,38400,57600,115200
  *          default at Baud9600
  */
+
 void MainWindow::initBaudRate() {
     for (const auto &BaudRate : this->BaudRateList) {
         auto *NewItem = new QStandardItem(QString::number(BaudRate));
         NewItem->setData(QString::number(BaudRate));
-        // std::cout << QString::number(BaudRate).toStdString() << std::endl;
         this->BaudRateModel->appendRow(NewItem);
-        // std::cout << NewItem->data().toString().toStdString() << std::endl;
     }
     UI->BaudRateList->setModel(this->BaudRateModel);
 }
@@ -71,23 +66,30 @@ void MainWindow::initBaudRate() {
  */
 
 void MainWindow::connectSlots() {
-    connect(UI->RefreshSerialListButton, &QPushButton::clicked, this, &MainWindow::getAvaliableSerialPorts);
-    connect(UI->EstablishConnectionButton, &QPushButton::clicked, this, &MainWindow::createConnection);
-    connect(UI->TerminateConnectionButton, &QPushButton::clicked, this, &MainWindow::terminateConnection);
-    connect(UI->SendDataButton, &QPushButton::clicked, this, &MainWindow::sendText);
-    connect(UI->ClearButton, &QPushButton::clicked, this, &MainWindow::clearAll);
-    connect(UI->SendFileButton, &QPushButton::clicked, this, &MainWindow::sendFile);
-    /** because read data is called every 1 second,so UihandledSerialConnection must be nullptr by
-     *  default instead of being undefined,if not,the program crashes 1s after it starts.
-     */
-    connect(UI->ReceiveAsTextButton, &QPushButton::clicked, this, &MainWindow::receiveText);
-    connect(UI->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveFile);
-    // connect(UiHandledSerialConnection, &SerialConnection::dataWritten, this, &MainWindow::dataWrittenHint);
+    connect(UI->EstablishConnectionButton, &QPushButton::clicked, this,
+            &MainWindow::createConnection);
+    connect(UI->TerminateConnectionButton, &QPushButton::clicked, this,
+            &MainWindow::terminateConnection);
+    connect(UI->RefreshSerialListButton, &QPushButton::clicked, this,
+            &MainWindow::getAvaliableSerialPorts);
+    connect(UI->ReceiveAsTextButton, &QPushButton::clicked, this,
+            &MainWindow::receiveText);
+    connect(UI->ReceiveAsFileButton, &QPushButton::clicked, this,
+            &MainWindow::receiveFile);
+    connect(UI->SendDataButton, &QPushButton::clicked, this,
+            &MainWindow::sendText);
+    connect(UI->SendFileButton, &QPushButton::clicked, this,
+            &MainWindow::sendFile);
+    connect(UI->ClearButton, &QPushButton::clicked, this,
+            &MainWindow::clearAll);
+    // connect(UiHandledSerialConnection, &SerialConnection::dataWritten, this,
+    // &MainWindow::showDataWrittenWindow);
 }
 
 /**
- * @note    get selected serial port name in SerialList and create a connection with it's name
- *          get selected baud rate in BaudRateList and use it as the baudrate of the connection,default at Baud9600
+ * @note    get selected serial port name in SerialList and create a connection
+ * with it's name get selected baud rate in BaudRateList and use it as the
+ * baudrate of the connection, default at Baud9600
  */
 
 void MainWindow::createConnection() {
@@ -96,18 +98,21 @@ void MainWindow::createConnection() {
         QMessageBox::warning(this, "Error", "Serial Port Already Opened");
         return;
     }
-    QSerialPort::BaudRate CurrentBaudRate = static_cast<QSerialPort::BaudRate>(UI->BaudRateList->currentText().toInt());
+    QSerialPort::BaudRate CurrentBaudRate = static_cast<QSerialPort::BaudRate>(
+        UI->BaudRateList->currentText().toInt());
     try {
-        this->UiHandledSerialConnection = new SerialConnection(SerialPortName, CurrentBaudRate);
+        this->UiHandledSerialConnection =
+            new SerialConnection(SerialPortName, CurrentBaudRate);
     } catch (std::runtime_error &e) {
         QMessageBox::warning(this, "串口打开失败", e.what());
     }
 }
 
 /**
- * @note    TerminalConnection when StopConnectionButton is clicked by calling SerialConnection::CloseConnection()
- *          Error Code SerialConnectionState::LastSerialConnectionNotCompleted is used to
- *          show warning MessageBox.
+ * @note    TerminalConnection when StopConnectionButton is clicked by calling
+ * SerialConnection::CloseConnection() Error Code
+ * SerialConnectionState::LastSerialConnectionNotCompleted is used to show
+ * warning MessageBox.
  */
 
 void MainWindow::terminateConnection() {
@@ -116,11 +121,10 @@ void MainWindow::terminateConnection() {
         return;
     }
     auto ConnectionState = this->UiHandledSerialConnection->closeConnection();
-    if (ConnectionState == SerialConnectionState::LastSerialOperationNotCompleted) {
-        /*
-         *Possible State:SerialConnectionState::LastSerialOperationNotCompleted
-         */
-        QMessageBox::warning(this, "Error", "Last Serial Operation Not Completed");
+    if (ConnectionState ==
+        SerialConnectionState::LastSerialOperationNotCompleted) {
+        QMessageBox::warning(this, "Error",
+                             "Last Serial Operation Not Completed");
     } else {
         this->getAvaliableSerialPorts();
         this->UiHandledSerialConnection = nullptr;
@@ -128,8 +132,9 @@ void MainWindow::terminateConnection() {
 }
 
 /**
- * @note    send text in TextEdit widget ( DataToSend ) by calling SerialConnection::writeData()
- *          Possible Error Code : SerialConnection::SerialPortNotOpened
+ * @note    send text in TextEdit widget ( DataToSend ) by calling
+ * SerialConnection::writeData() possible Error Code :
+ * SerialConnection::SerialPortNotOpened
  */
 
 void MainWindow::sendText() {
@@ -139,22 +144,25 @@ void MainWindow::sendText() {
     }
     // assert(this->UiSerialConnection != nullptr);
     SerialConnectionState ConnectionState =
-        this->UiHandledSerialConnection->writeData(UI->DataToSendTextBox->toPlainText().toUtf8());
-    /*
-     * Possible State:SerialConnectionState::SerialPortNotOpened
-     */
+        this->UiHandledSerialConnection->writeData(
+            UI->DataToSendTextBox->toPlainText().toUtf8());
     if (ConnectionState == SerialConnectionState::SerialPortNotOpened) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
     }
-    connect(this->UiHandledSerialConnection, &SerialConnection::dataFullyWritten, this, &MainWindow::showDataWrittenWindow);
+    this->CompletionBoxShown = false;
+    connect(this->UiHandledSerialConnection,
+            &SerialConnection::dataFullyWritten, this,
+            &MainWindow::showDataWrittenWindow);
 }
 
 /**
  * @note    send file by calling SerialConnection::writeData()
  *          possible Error code : SerialConnection::SerialPortNotOpened
  */
+
 void MainWindow::sendFile() {
-    QString FileName = QFileDialog::getOpenFileName(this, "Open File", QDir::currentPath());
+    QString FileName =
+        QFileDialog::getOpenFileName(this, "Open File", QDir::currentPath());
     if (FileName.isEmpty()) {
         return;
     }
@@ -166,12 +174,15 @@ void MainWindow::sendFile() {
     if (ConnectionState == SerialConnectionState::SerialPortNotOpened) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
     }
-    connect(this->UiHandledSerialConnection, &SerialConnection::dataFullyWritten, this, &MainWindow::showDataWrittenWindow);
+    this->CompletionBoxShown = false;
+    connect(this->UiHandledSerialConnection,
+            &SerialConnection::dataFullyWritten, this,
+            &MainWindow::showDataWrittenWindow);
 }
 
 /**
- * @note    receive data from another device by calling SerialConnection::readData()
-            called when ReceiveAsTextButton is clicked
+ * @note    receive data from another device by calling
+ SerialConnection::readData() called when ReceiveAsTextButton is clicked
  *          possible Error code : SerialConnection::NothingToBeReaded
  */
 
@@ -181,18 +192,21 @@ void MainWindow::receiveText() {
         return;
     }
     // assert(this->UiHandledSerialConnection != nullptr);
-    /*if UiHandledSerialConnection is not given nullptr before constructed , the program crashes here*/
+    /*if UiHandledSerialConnection is not given nullptr before constructed , the
+     * program crashes here*/
     auto TextDataFromSerialPort = this->UiHandledSerialConnection->readData();
     if (TextDataFromSerialPort.isEmpty()) {
         return;
     }
     UI->DataReceivedTextBox->moveCursor(QTextCursor::End);
-    UI->DataReceivedTextBox->insertPlainText(QString::fromUtf8(TextDataFromSerialPort));
+    UI->DataReceivedTextBox->insertPlainText(
+        QString::fromUtf8(TextDataFromSerialPort));
 }
 
 /**
-* @note     receive data from another device by calling SerialConnection::readData
-            called when ReceiveAsFileButton is clicked
+* @note     receive data from another device by calling
+            SerialConnection::readData called when ReceiveAsFileButton is
+clicked
 */
 
 void MainWindow::receiveFile() {
@@ -200,11 +214,13 @@ void MainWindow::receiveFile() {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
-    QString NameOfFileToSave = QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
+    QString NameOfFileToSave =
+        QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
     if (NameOfFileToSave.isEmpty()) {
         return;
     }
-    QByteArray FileDataFromSerialPort = this->UiHandledSerialConnection->readData();
+    QByteArray FileDataFromSerialPort =
+        this->UiHandledSerialConnection->readData();
     QFile file(NameOfFileToSave);
     if (!file.open(QIODevice::WriteOnly)) {
         QMessageBox::warning(this, "Error", "File Open Failed");
@@ -212,7 +228,8 @@ void MainWindow::receiveFile() {
     }
     QDataStream out(&file);
     /*pay attention , FileDataFromSerialPort cast from long long to int*/
-    out.writeRawData(FileDataFromSerialPort.data(), static_cast<int>(FileDataFromSerialPort.size()));
+    out.writeRawData(FileDataFromSerialPort.data(),
+                     static_cast<int>(FileDataFromSerialPort.size()));
     file.close();
 }
 
@@ -226,5 +243,9 @@ void MainWindow::clearAll() {
 }
 
 void MainWindow::showDataWrittenWindow() {
+    if (this->CompletionBoxShown) {
+        return;
+    }
+    this->CompletionBoxShown = true;
     QMessageBox::information(this, "Data Written", "Data Written Successfully");
 }
