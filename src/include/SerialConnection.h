@@ -8,9 +8,9 @@
 
 #ifndef SERIAL_CONNECTION_H
 #define SERIAL_CONNECTION_H
-#include <QSerialPort>
 #include <QObject>
 #include <QFile>
+#include <QtSerialPort/QSerialPort>
 
 /**
  *  @brief  SerialConnectionState is the error code class of SerialConnection ,

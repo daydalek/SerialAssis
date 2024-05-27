@@ -13,10 +13,10 @@ class DataParser {
     DataParser() = default;
 
   public:
-    DataType getType(const QByteArray &data) const;
-    QByteArray getData(const QByteArray &data) const;
-    QByteArray getMD5(const QByteArray &data) const;
-    Md5Validation validateMd5(const QByteArray &data) const;
+    static DataType        getType     (const QByteArray &data) ;
+    static QByteArray      getData     (const QByteArray &data) ;
+    static QByteArray      getMD5      (const QByteArray &data) ;
+    static Md5Validation   validateMd5 (const QByteArray &data) ;
 };
 
 #endif // DATAPARSER_H

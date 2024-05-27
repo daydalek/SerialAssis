@@ -13,6 +13,7 @@
 #include "SerialMonitor.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
+#include <QSerialPort>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QSerialPortInfo>
@@ -49,8 +50,9 @@ class MainWindow : public QMainWindow {
     void terminateConnection();
     void sendText();
     void sendFile();
-    void receiveText();
-    void receiveFile();
+    void receiveData();
+    void receiveText(const QByteArray& Text);
+    void receiveFile(QByteArray File);
     void initBaudRate();
     void clearAll();
     void getAvaliableSerialPorts();

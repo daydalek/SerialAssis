@@ -43,8 +43,7 @@ class SerialMonitor : public QWidget {
     QPushButton     *RefreshSerialListButton;
     QPushButton     *EstablishConnectionButton;
     QPushButton     *TerminateConnectionButton;
-    QPushButton     *ReceiveAsTextButton;
-    QPushButton     *ReceiveAsFileButton;
+    QPushButton     *ReceiveButton;
     QComboBox       *BaudRateList;
     QComboBox       *SerialPortList;
     QLabel          *DateTimeLabel;

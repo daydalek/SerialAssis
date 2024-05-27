@@ -7,6 +7,7 @@
 */
 
 #include "include/MainWindow.h"
+#include "include/DataParser.h"
 #include "include/SerialConnection.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -72,10 +73,8 @@ void MainWindow::connectSlots() {
             &MainWindow::terminateConnection);
     connect(UI->RefreshSerialListButton, &QPushButton::clicked, this,
             &MainWindow::getAvaliableSerialPorts);
-    connect(UI->ReceiveAsTextButton, &QPushButton::clicked, this,
-            &MainWindow::receiveText);
-    connect(UI->ReceiveAsFileButton, &QPushButton::clicked, this,
-            &MainWindow::receiveFile);
+    connect(UI->ReceiveButton, &QPushButton::clicked, this,
+            &MainWindow::receiveData);
     connect(UI->SendDataButton, &QPushButton::clicked, this,
             &MainWindow::sendText);
     connect(UI->SendFileButton, &QPushButton::clicked, this,
@@ -186,15 +185,21 @@ void MainWindow::sendFile() {
  *          possible Error code : SerialConnection::NothingToBeReaded
  */
 
-void MainWindow::receiveText() {
+void MainWindow::receiveData() {
     if (this->UiHandledSerialConnection == nullptr) {
         QMessageBox::warning(this, "Error", "Serial Port Not Opened");
         return;
     }
+    auto Data = this->UiHandledSerialConnection->readData();
+    auto DataType = DataParser::getType(Data);
+    receiveFile(DataParser::getData(Data));
+}
+
+void MainWindow::receiveText(const QByteArray &TextDataFromSerialPort) {
     // assert(this->UiHandledSerialConnection != nullptr);
     /*if UiHandledSerialConnection is not given nullptr before constructed , the
      * program crashes here*/
-    auto TextDataFromSerialPort = this->UiHandledSerialConnection->readData();
+
     if (TextDataFromSerialPort.isEmpty()) {
         return;
     }
@@ -209,18 +214,14 @@ void MainWindow::receiveText() {
 clicked
 */
 
-void MainWindow::receiveFile() {
-    if (this->UiHandledSerialConnection == nullptr) {
-        QMessageBox::warning(this, "Error", "Serial Port Not Opened");
-        return;
-    }
+void MainWindow::receiveFile(QByteArray FileDataFromSerialPort) {
     QString NameOfFileToSave =
         QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
     if (NameOfFileToSave.isEmpty()) {
         return;
     }
-    QByteArray FileDataFromSerialPort =
-        this->UiHandledSerialConnection->readData();
+    // QByteArray FileDataFromSerialPort =
+    // this->UiHandledSerialConnection->readData();
     QFile file(NameOfFileToSave);
     if (!file.open(QIODevice::WriteOnly)) {
         QMessageBox::warning(this, "Error", "File Open Failed");

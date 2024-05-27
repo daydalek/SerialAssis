@@ -13,6 +13,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QCryptographicHash>
+#include <msgpack.hpp>
 
 #ifndef DATAWRAPPER_H
 #define DATAWRAPPER_H
@@ -21,7 +22,7 @@
 class DataWrapper {
   public:
     DataWrapper() = default;
-    QByteArray wrapData(const QByteArray &data, DataType type = DataType::Text,
+    static QByteArray wrapData(const QByteArray &data, DataType type = DataType::Text,
                         bool withMd5 = false);
 };
 

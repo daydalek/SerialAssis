@@ -15,8 +15,7 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
     ClearButton                 = new QPushButton("清除");
     SendDataButton              = new QPushButton("发送");
     SendFileButton              = new QPushButton("发送文件");
-    ReceiveAsTextButton         = new QPushButton("接收为文本");
-    ReceiveAsFileButton         = new QPushButton("接收为文件");
+    ReceiveButton               = new QPushButton("接收");
     RefreshSerialListButton     = new QPushButton("刷新串口列表");
     BaudRateList                = new QComboBox();
     SerialPortList              = new QComboBox();
@@ -30,8 +29,7 @@ SerialMonitor::SerialMonitor(QWidget *parent) : QWidget(parent) {
 
     LeftLayout                  ->addWidget(new QLabel("接收区"));
     LeftLayout                  ->addWidget(DataReceivedTextBox);
-    LeftLayout                  ->addWidget(ReceiveAsFileButton);
-    LeftLayout                  ->addWidget(ReceiveAsTextButton);
+    LeftLayout                  ->addWidget(ReceiveButton);
     LeftLayout                  ->addLayout(ReceiveControlLayout);
 
     SendControlLayout           ->addWidget(SendDataButton);
