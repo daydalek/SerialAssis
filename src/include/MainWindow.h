@@ -2,10 +2,8 @@
  * @file    MainWindow.h
  * @brief   This class is responsible for connecting the UI and the serial connection together.
  * @note    including call the functions in SerialConnection when buttons are clicked,
- *          insert BaudRate into BaudRateList,
- *          pdate SerialPortList constantly,
- *          and show the data received from serial port in the TextEdit widget,
- *          or save it as file.
+ *          insert BaudRate into BaudRateList,update SerialPortList constantly and show
+ *          the data received from serial port in the TextEdit widget or save it as file.
  */
 
 #ifndef MAINWINDOW_H
