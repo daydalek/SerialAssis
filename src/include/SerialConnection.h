@@ -35,10 +35,11 @@ public:
     [[nodiscard]] SerialConnectionState writeData(const QByteArray &data)       const;
     [[nodiscard]] SerialConnectionState writeFile(const QString& NewFileName)   const;
     [[nodiscard]] SerialConnectionState closeConnection()                       const;
-    [[nodiscard]] QByteArray            readData()                              const;
+    [[nodiscard]] QByteArray            readData()                              ;
 
     signals:
     void dataFullyWritten();
+    void dataReadyToRead();
 
 private:
     QSerialPort             *SerialPort = nullptr;
