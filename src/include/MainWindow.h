@@ -13,6 +13,7 @@
 
 #include "SerialConnection.h"
 #include "SerialMonitor.h"
+#include "ConfigParser.h"
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QFileDialog>
@@ -44,9 +45,14 @@ class MainWindow : public QMainWindow {
      */
     bool                                CompletionBoxShown            = false;
 
+private:
+    ConfigStruct                        DefaultConfig                 ={false,false,"","",""};
+
+private:
+    void loadConfig(const QString& ConfigPath);
+    void connectSlots();
 
   private slots:
-    void connectSlots();
     void createConnection();
     void terminateConnection();
     void sendText();
@@ -57,6 +63,8 @@ class MainWindow : public QMainWindow {
     void clearAll();
     void getAvaliableSerialPorts();
     void showDataWrittenWindow();
+    void receiveOnBoot();
+    void sendonBoot();
 };
 
 #endif // MAINWINDOW_H
