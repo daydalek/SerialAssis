@@ -24,8 +24,7 @@ ConfigStruct ConfigParser::parseConfig(const QString &ConfigFilePath) {
     if (obj.contains("DefaultSendSerialPort"))
         config.DefaultSendSerialPort = obj["DefaultSendSerialPort"].toString();
     if (obj.contains("DefaultReceiveSerialPort"))
-        config.DefaultReceiveSerialPort =
-            obj["DefaultReceiveSerialPort"].toString();
+        config.DefaultReceiveSerialPort = obj["DefaultReceiveSerialPort"].toString();
     file.close();
     return config;
 }
