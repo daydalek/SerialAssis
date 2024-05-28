@@ -76,12 +76,13 @@ SerialConnectionState SerialConnection::writeFile(const QString &NameOfFileToWri
  *          the TextEdit widget.
  */
 
-QByteArray SerialConnection::readData() const {
+QByteArray SerialConnection::readData() {
     if (SerialPort->bytesAvailable() == 0) {
         return nullptr;
     }
     QByteArray DataFromSerialPort = SerialPort->readAll();
     // QMessageBox::information(nullptr, "Data Received", "Data Received Successfully");
+    emit dataReadyToRead();
     return DataFromSerialPort;
 }
 

@@ -202,7 +202,7 @@ void MainWindow::sendFile() {
 
 /**
  * @note    receive data from another device by calling
- SerialConnection::readData() called when ReceiveAsTextButton is clicked
+            SerialConnection::readData() called when ReceiveAsTextButton is clicked
  *          possible Error code : SerialConnection::NothingToBeReaded
  */
 
