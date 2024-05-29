@@ -1,21 +1,22 @@
 /**
- * @file     SerialConnection.cpp
- * @brief    Implementations of SerialConnection.h
- * @note     This file is about the serial connection operations,including two write operation
- *           and one read operation. There are two operation for writing because there are
- *           different stategies to write data or write file,while reading operation deal with
- *           all the data in the same way,whether to save it as file or show it in the TextEdit
- *           widget is decided in MainWindow by User clicking ReceiveAsFileButton or ReceiveAsTextButton.
+ * @file        SerialConnection.cpp
+ * @brief       Implementations of SerialConnection.h
+ * @note        This file is about the serial connection operations,including two
+ *              write operation and one read operation. There are two operation for writing
+ *              because there are different stategies to write data or write file,while
+ *              reading operation deal with all the data in the same way,whether to save it
+ *              as file or show it in the TextEdit widget is decided in MainWindow by User
+ *              clicking ReceiveAsFileButton or ReceiveAsTextButton.
  */
 #include "include/SerialConnection.h"
 
 #define SERIAL_UNABLE_TO_WRITE (-1)
 
 /**
- * @param SerialPortName    the name of the serial port to open, which is shown in the ComboBox widget
- *                          in user interface and chosed by the user.
- * @param BaudRate          as the baudrate for the serial connection , chosed by the user in user interface , default
- *                          at 9600
+ * @param SerialPortName    the name of the serial port to open, which is shown
+ *                          in the ComboBox widget in user interface and chosed by the user.
+ * @param BaudRate          as the baudrate for the serial connection , chosed
+ *                          by the user in user interface , default at 9600
  * @return                  a SerialConnection object,handled by MainWindow
  */
 
@@ -36,14 +37,14 @@ SerialConnection::~SerialConnection() {
 }
 
 /**
- * @param   DataToWrite as the data to be written, which is inputted in the TextEdit
- *          widget in user interface
- * @return  the Error Code of the operation,used to show warning MessageBox when write
- *          operation failed
+ * @param   DataToWrite as the data to be written, which is inputted in the
+ *          TextEdit widget in user interface
+ * @return  the Error Code of the operation,used to show warning MessageBox when
+ *          write operation failed
  */
 
 SerialConnectionState SerialConnection::writeData(const QByteArray &DataToWrite) const {
-    // assert(SerialPort != nullptr);
+    /* assert(SerialPort != nullptr); */
     if (SerialPort->write(DataToWrite) == SERIAL_UNABLE_TO_WRITE) {
         return SerialConnectionState::SerialPortNotOpened;
     }
@@ -81,14 +82,15 @@ QByteArray SerialConnection::readData() {
         return nullptr;
     }
     QByteArray DataFromSerialPort = SerialPort->readAll();
-    // QMessageBox::information(nullptr, "Data Received", "Data Received Successfully");
+    /* QMessageBox::information(nullptr, "Data Received", "Data Received
+     Successfully");*/
     emit dataReadyToRead();
     return DataFromSerialPort;
 }
 
 /**
- * @return  the Error Code. SerialPort is closed only when last operation is finished
- *          (which is nothing to read and nothing to write)
+ * @return  the Error Code. SerialPort is closed only when last operation is
+ *          finished (which is nothing to read and nothing to write)
  */
 
 SerialConnectionState SerialConnection::closeConnection() const {

@@ -5,11 +5,11 @@
 
 class ConfigStruct {
   public:
-    bool SendOnBoot;
-    bool ReceiveOnBoot;
-    QString DefaultSaveFile;
-    QString DefaultSendSerialPort;
-    QString DefaultReceiveSerialPort;
+    bool      SendOnBoot;
+    bool      ReceiveOnBoot;
+    QString   DefaultSaveFile;
+    QString   DefaultSendSerialPort;
+    QString   DefaultReceiveSerialPort;
 };
 
 #endif // CONFIGSTRUCT_H

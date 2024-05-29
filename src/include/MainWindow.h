@@ -46,7 +46,11 @@ class MainWindow : public QMainWindow {
     bool                                CompletionBoxShown            = false;
 
 private:
-    ConfigStruct                        DefaultConfig                 ={false,false,"","",""};
+    ConfigStruct                        DefaultConfig                 ={false,\
+                                                                        false,\
+                                                                        "",\
+                                                                        "",\
+                                                                        ""};
 
 private:
     void loadConfig(const QString& ConfigPath);

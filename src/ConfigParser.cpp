@@ -2,6 +2,7 @@
 
 ConfigStruct ConfigParser::parseConfig(const QString &ConfigFilePath) {
     ConfigStruct config = ConfigStruct{false, false, "", "", ""};
+
     QFile file(ConfigFilePath);
     if (!file.open(QIODevice::ReadOnly)) {
         return config;
