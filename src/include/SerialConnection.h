@@ -41,10 +41,8 @@ public:
     void dataFullyWritten();
     void dataReadyToRead();
 
-private:
+public:
     QSerialPort             *SerialPort = nullptr;
-    QSerialPort::BaudRate   CurrentConnectedSerialPortBaudRate;
-    QString                 CurrentConnectedSerialPortName;
 
 private slots:
     void onBytesWritten();

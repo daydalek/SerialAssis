@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 class ConfigParser {
+public:
     ConfigParser() = default;
 
   public:

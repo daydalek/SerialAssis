@@ -105,6 +105,7 @@ void MainWindow::connectSlots() {
     if (this->DefaultConfig.ReceiveOnBoot) {
         this->UiHandledSerialConnection =
             new SerialConnection(this->DefaultConfig.DefaultReceiveSerialPort, QSerialPort::Baud115200);
+        disconnect(UI->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveFile);
         connect(UI->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveOnBoot);
     }
     /*   connect(UiHandledSerialConnection, &SerialConnection::dataWritten, this,
@@ -282,7 +283,7 @@ void MainWindow::sendonBoot() {
     try {
         this->UiHandledSerialConnection =
             new SerialConnection(this->DefaultConfig.DefaultSendSerialPort, QSerialPort::Baud115200);
-    } catch (std::runtime_error) {
+    } catch (std::runtime_error &e) {
         QMessageBox::warning(this, "串口打开失败", "串口打开失败");
         exit(1);
     }
@@ -309,16 +310,25 @@ void MainWindow::sendonBoot() {
  */
 
 void MainWindow::receiveOnBoot() {
-    QString FileName = this->DefaultConfig.DefaultSaveFile;
-    if (FileName.isEmpty()) {
-        FileName = QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
+    QString NameOfFileToSave = this->DefaultConfig.DefaultSaveFile;
+    if (NameOfFileToSave.isEmpty()) {
+        NameOfFileToSave = QFileDialog::getSaveFileName(this, "Save File", QDir::currentPath());
     }
-    QFile file(FileName);
+    /*
+    QMessageBox::information(this, "file to save", NameOfFileToSave);
+    */
     QByteArray FileDataFromSerialPort = this->UiHandledSerialConnection->readData();
-    file.write(FileDataFromSerialPort);
-    /* disconnect(UiHandledSerialConnection, &SerialConnection::dataReadyToRead,*/
-    /* &receiveOnBoot);*/
+    QFile file(NameOfFileToSave);
+    if (!file.open(QIODevice::WriteOnly)) {
+        QMessageBox::warning(this, "Error", "File Open Failed");
+        return;
+    }
+    QDataStream out(&file);
+    /*pay attention , FileDataFromSerialPort cast from long long to int*/
+    out.writeRawData(FileDataFromSerialPort.data(), static_cast<int>(FileDataFromSerialPort.size()));
+    file.close();
     disconnect(UI->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveOnBoot);
+    connect(UI->ReceiveAsFileButton, &QPushButton::clicked, this, &MainWindow::receiveFile);
     /* delete UiHandledSerialConnection; */
     /* UiHandledSerialConnection = nullptr;*/
 }

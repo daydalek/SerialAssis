@@ -28,12 +28,12 @@ SerialConnection::SerialConnection(const QString &SerialPortName, QSerialPort::B
     if (!SerialPort->isOpen()) {
         throw std::runtime_error("Serial Port is not opened");
     }
-    CurrentConnectedSerialPortBaudRate = BaudRate;
 }
 
 SerialConnection::~SerialConnection() {
     SerialPort->close();
     delete SerialPort;
+    this->SerialPort = nullptr;
 }
 
 /**
